@@ -10,7 +10,5 @@ namespace SitecoreLibrary.Models
         [Required(ErrorMessage = "Name is required.")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Author is required.")]
-        public string Author { get; set; }
     }
 }

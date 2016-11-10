@@ -25,7 +25,6 @@ namespace SitecoreLibrary.Repository
             SqlCommand com = new SqlCommand("AddNewAuthorDetails", con);
             com.CommandType = CommandType.StoredProcedure;
             com.Parameters.AddWithValue("@Name", obj.Name);
-            com.Parameters.AddWithValue("@Book", obj.Book);
 
             con.Open();
             int i = com.ExecuteNonQuery();
@@ -64,7 +63,6 @@ namespace SitecoreLibrary.Repository
                     {
                         Authorid = Convert.ToInt32(dr["Id"]),
                         Name = Convert.ToString(dr["Name"]),
-                        Book = Convert.ToString(dr["Book"]),
                     }
                 );
             }
@@ -81,7 +79,6 @@ namespace SitecoreLibrary.Repository
             com.CommandType = CommandType.StoredProcedure;
             com.Parameters.AddWithValue("@AuthorId", obj.Authorid);
             com.Parameters.AddWithValue("@Name", obj.Name);
-            com.Parameters.AddWithValue("@Book", obj.Book);
             con.Open();
             int i = com.ExecuteNonQuery();
             con.Close();

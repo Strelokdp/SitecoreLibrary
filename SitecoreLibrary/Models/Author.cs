@@ -9,8 +9,5 @@ namespace SitecoreLibrary.Models
 
         [Required(ErrorMessage = "Name is required.")]
         public string Name { get; set; }
-
-        [Required(ErrorMessage = "Book is required.")]
-        public string Book { get; set; }
     }
 }
