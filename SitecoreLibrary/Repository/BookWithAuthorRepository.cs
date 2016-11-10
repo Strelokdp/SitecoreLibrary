@@ -85,7 +85,7 @@ namespace SitecoreLibrary.Repository
             SqlCommand com = new SqlCommand("UpdateBookWithAuthorDetails", con);
 
             com.CommandType = CommandType.StoredProcedure;
-            com.Parameters.AddWithValue("@BookToAuthorId", obj.Id);
+            com.Parameters.AddWithValue("@Id", obj.Id);
             com.Parameters.AddWithValue("@BookName", obj.BookName);
             com.Parameters.AddWithValue("@FirstName", obj.FirstName);
             com.Parameters.AddWithValue("@LastName", obj.LastName);
