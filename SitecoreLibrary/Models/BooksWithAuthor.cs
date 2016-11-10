@@ -10,7 +10,20 @@ namespace SitecoreLibrary.Models
         [Required(ErrorMessage = "Name is required.")]
         public string BookName { get; set; }
 
-        [Required(ErrorMessage = "Name is required.")]
-        public string AuthorName { get; set; }
+        [Display(Name = "Author first name")]
+        [Required(ErrorMessage = "First name is required.")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Author last name")]
+        [Required(ErrorMessage = "Last name is required.")]
+        public string LastName { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return (LastName + ", " + FirstName);
+            }
+        }
     }
 }

@@ -1,18 +1,13 @@
 ﻿@model IEnumerable<SitecoreLibrary.Models.BooksWithAuthor>
 
 <p>
-    @Html.ActionLink("Add New Book", "AddBook")
+    @Html.ActionLink("Add New Book", "AddBookWithAuthor")
 </p>
 
 <table class="table">
     <tr>
-
         <th>
-            @Html.DisplayNameFor(model => model.Id)
-        </th>
-
-        <th>
-            @Html.DisplayNameFor(model => model.AuthorName)
+            @Html.DisplayNameFor(model => model.FullName)
         </th>
 
         <th>
@@ -28,11 +23,16 @@
         <tr>
 
             <td>
-                @Html.DisplayFor(model => item.AuthorName)
+                @Html.DisplayFor(model => item.FullName)
             </td>
             
             <td>
                 @Html.DisplayFor(model => item.BookName)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "EditBookWithAuthorDetails", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteBookWithAuthor", new { id = item.Id }, new { onclick = "return confirm('Are sure wants to delete?');" })
             </td>
         </tr>
 
