@@ -20,8 +20,10 @@ namespace SitecoreLibrary.Controllers
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                    var x = FormsAuthentication.GetAuthCookie(model.UserName, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl))
                     {
+                        var y = x;
                         return Redirect(returnUrl);
                     }
                     else
