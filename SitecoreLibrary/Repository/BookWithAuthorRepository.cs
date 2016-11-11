@@ -35,7 +35,6 @@ namespace SitecoreLibrary.Repository
             //Bind Author generic list using dataRow     
             foreach (DataRow dr in dt.Rows)
             {
-
                 booksWithAuthorList.Add(
                     new BooksWithAuthor
                     {
@@ -43,6 +42,8 @@ namespace SitecoreLibrary.Repository
                         BookName = Convert.ToString(dr["BookName"]),
                         FirstName = Convert.ToString(dr["FirstName"]),
                         LastName = Convert.ToString(dr["LastName"]),
+                        TakenByUserId = Guid.Parse(dr["TakenByUserID"].ToString()),
+                        IsTaken = Convert.ToBoolean(dr["IsTaken"])
                     }
                 );
             }
@@ -60,6 +61,8 @@ namespace SitecoreLibrary.Repository
             com.Parameters.AddWithValue("@BookName", obj.BookName);
             com.Parameters.AddWithValue("@FirstName", obj.FirstName);
             com.Parameters.AddWithValue("@LastName", obj.LastName);
+            //com.Parameters.AddWithValue("@TakenByUserID", obj.TakenByUserId);
+            //com.Parameters.AddWithValue("@IsTaken", obj.IsTaken);
 
             con.Open();
             int i = com.ExecuteNonQuery();
@@ -115,6 +118,33 @@ namespace SitecoreLibrary.Repository
 
             com.CommandType = CommandType.StoredProcedure;
             com.Parameters.AddWithValue("@BookToAuthorId", Id);
+            
+            con.Open();
+            int i = com.ExecuteNonQuery();
+            con.Close();
+            if (i >= 1)
+            {
+
+                return true;
+
+            }
+            else
+            {
+
+                return false;
+            }
+
+
+        }
+
+        public bool TakeBook(int bookId)
+        {
+
+            connection();
+            SqlCommand com = new SqlCommand("TakeBookWithUser", con);
+
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@BookToAuthorId", bookId);
 
             con.Open();
             int i = com.ExecuteNonQuery();

@@ -88,5 +88,25 @@ namespace SitecoreLibrary.Controllers
                 return View();
             }
         }
+
+        public ActionResult TakeBookWithUser(int bookId)
+        {
+            try
+            {
+                BookWithAuthorRepository bookAuthRepo = new BookWithAuthorRepository();
+                if (bookAuthRepo.TakeBook(bookId))
+                {
+                    ViewBag.AlertMsg = "Book was taken";
+
+                }
+                return RedirectToAction("GetAllBookAuthorDetails");
+
+            }
+            catch
+            {
+                return View();
+
+            }
+        }
     }
 }

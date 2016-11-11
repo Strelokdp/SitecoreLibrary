@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace SitecoreLibrary.Models
 {
@@ -17,6 +18,10 @@ namespace SitecoreLibrary.Models
         [Display(Name = "Author last name")]
         [Required(ErrorMessage = "Last name is required.")]
         public string LastName { get; set; }
+
+        public bool IsTaken { get; set; }
+
+        public Guid TakenByUserId { get; set; }
 
         public string FullName
         {
