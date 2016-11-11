@@ -88,5 +88,10 @@ namespace SitecoreLibrary.Controllers
                 return View();
             }
         }
+
+        public ActionResult RedirectRegistration()
+        {
+            return RedirectToRoute(new { controller = "Account", action = "Register"});
+        }
     }
 }
