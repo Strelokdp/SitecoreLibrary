@@ -12,6 +12,19 @@
         <th>
             @Html.ActionLink("Book Name", "GetAllBookAuthorDetails", new { sortOrder = ViewBag.BookSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
+        
+        <th>
+            Modification
+        </th>
+        
+        <th>
+            @{
+                if (Request.IsAuthenticated)
+                {   
+                    @Html.Label("Book status")
+                }
+            }
+        </th>
 
     </tr>
 
