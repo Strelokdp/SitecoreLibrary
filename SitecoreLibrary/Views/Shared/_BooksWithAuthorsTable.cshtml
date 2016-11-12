@@ -37,15 +37,17 @@
                     {
                         @Html.ActionLink("Take book", "TakeBookWithUser",
                             new { bookId = item.Id,
+                                bookName = item.BookName,
                                 userId = (Guid)(Membership.GetUser().ProviderUserKey),
                                 eMail = Membership.GetUser().Email },
                             new { onclick = "return confirm('Do you really want to take this book?');" })
                     }
                     else if (Request.IsAuthenticated && item.TakenByUserId == (Guid)(Membership.GetUser().ProviderUserKey))
                     {
-                        @Html.ActionLink("Return book", "ReturnBookWithUser", 
+                        @Html.ActionLink("Return book", "ReturnBookWithUser",
                        new { bookId = item.Id ,
-                            eMail = Membership.GetUser().Email }, 
+                           bookName = item.BookName,
+                           eMail = Membership.GetUser().Email },
                        new { onclick = "return confirm('Do you really want to take this book?');" })
                     }
                 }

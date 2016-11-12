@@ -119,7 +119,7 @@ namespace SitecoreLibrary.Controllers
             }
         }
 
-        public ActionResult TakeBookWithUser(int bookId, Guid userId, string eMail)
+        public ActionResult TakeBookWithUser(int bookId, Guid userId, string eMail, string bookName)
         {
             try
             {
@@ -130,7 +130,7 @@ namespace SitecoreLibrary.Controllers
                     var fromAddress = new MailAddress("sitecorelibrary2016@gmail.com", "Sitecore Library");
                     var toAddress = new MailAddress(eMail, eMail);
                     const string fromPassword = "sitecore2016";
-                    const string subject = "Book has been taken";
+                    const string subject = " has been taken";
                     const string body = "You have just taken book, don't forget to return it";
 
                     var smtp = new SmtpClient
@@ -144,7 +144,7 @@ namespace SitecoreLibrary.Controllers
                     };
                     using (var message = new MailMessage(fromAddress, toAddress)
                     {
-                        Subject = subject,
+                        Subject = bookName + subject,
                         Body = body
                     })
                     {
@@ -161,7 +161,7 @@ namespace SitecoreLibrary.Controllers
             }
         }
 
-        public ActionResult ReturnBookWithUser(int bookId, string eMail)
+        public ActionResult ReturnBookWithUser(int bookId, string eMail, string bookName)
         {
             try
             {
