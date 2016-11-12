@@ -21,13 +21,10 @@ namespace SitecoreLibrary.Controllers
 
             var bookList = bookAuthRepo.GetAllBooksWithAuthors();
 
-            
+            if (!String.IsNullOrEmpty(SelectList))
+            {
                 switch (SelectList)
                 {
-                    case ("All books"):
-                        bookList = bookAuthRepo.GetAllBooksWithAuthors();
-                        break;
-
                     case ("Available books"):
                         bookList = bookAuthRepo.GetAllBooksWithAuthors().Where(x => !x.IsTaken).ToList();
                         break;
@@ -35,8 +32,12 @@ namespace SitecoreLibrary.Controllers
                     case ("Taken books"):
                         bookList = bookAuthRepo.GetAllBooksWithAuthors().Where(x => x.IsTaken).ToList();
                         break;
+
+                    default:
+                        bookList = bookAuthRepo.GetAllBooksWithAuthors();
+                        break;
                 }
-            
+            }
 
             return View(bookList);
         }

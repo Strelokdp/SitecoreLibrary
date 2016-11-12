@@ -6,7 +6,7 @@
 </p>
 
 @{
-    var bookFilterList = new List<string> { "All books", "Available books", "Taken books" } as IEnumerable<string>;
+    var bookFilterList = new List<string> {"All books", "Available books", "Taken books" } as IEnumerable<string>;
 }
 
 @using (Ajax.BeginForm("GetAllBookAuthorDetails", "BookWithAuthor", new AjaxOptions
@@ -16,54 +16,11 @@
     InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace
 }))
 {
-    @Html.DropDownList("SelectList", new SelectList(bookFilterList), "Select book plan", new { onchange = "$(this.form).submit();" })
+    @Html.DropDownList("SelectList", new SelectList(bookFilterList), "Select books plan", new { onchange = "$(this.form).submit();" })
 }
 
-<table id="SearchResults">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FullName)
-        </th>
+@Html.Partial("_BooksWithAuthorsTable")
 
-        <th>
-            @Html.DisplayNameFor(model => model.BookName)
-        </th>
-
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        @Html.HiddenFor(model => item.Id)
-        <tr>
-
-            <td>
-                @Html.DisplayFor(model => item.FullName)
-            </td>
-
-            <td>
-                @Html.DisplayFor(model => item.BookName)
-            </td>
-
-            <td>
-                @Html.ActionLink("Edit", "EditBookWithAuthorDetails", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "DeleteBookWithAuthor", new { id = item.Id }, new { onclick = "return confirm('Are you sure about delete?');" })
-            </td>
-
-            <td>
-                @{
-                    if (Request.IsAuthenticated && !item.IsTaken)
-                    {
-                        @Html.ActionLink("Take book", "TakeBookWithUser", new { bookId = item.Id, userId = (Guid)(Membership.GetUser().ProviderUserKey) }, new { onclick = "return confirm('Do you really want to take this book?');" })
-                    }
-                    else if (Request.IsAuthenticated && item.TakenByUserId == (Guid)(Membership.GetUser().ProviderUserKey))
-                    {
-                        @Html.ActionLink("Return book", "ReturnBookWithUser", new { bookId = item.Id }, new { onclick = "return confirm('Do you really want to take this book?');" })
-                    }
-                }
-            </td>
-        </tr>
-                    }
-</table>
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
