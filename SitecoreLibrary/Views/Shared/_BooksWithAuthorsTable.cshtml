@@ -35,11 +35,18 @@
                 @{
                     if (Request.IsAuthenticated && !item.IsTaken)
                     {
-                        @Html.ActionLink("Take book", "TakeBookWithUser", new { bookId = item.Id, userId = (Guid)(Membership.GetUser().ProviderUserKey) }, new { onclick = "return confirm('Do you really want to take this book?');" })
+                        @Html.ActionLink("Take book", "TakeBookWithUser",
+                            new { bookId = item.Id,
+                                userId = (Guid)(Membership.GetUser().ProviderUserKey),
+                                eMail = Membership.GetUser().Email },
+                            new { onclick = "return confirm('Do you really want to take this book?');" })
                     }
                     else if (Request.IsAuthenticated && item.TakenByUserId == (Guid)(Membership.GetUser().ProviderUserKey))
                     {
-                        @Html.ActionLink("Return book", "ReturnBookWithUser", new { bookId = item.Id }, new { onclick = "return confirm('Do you really want to take this book?');" })
+                        @Html.ActionLink("Return book", "ReturnBookWithUser", 
+                       new { bookId = item.Id ,
+                            eMail = Membership.GetUser().Email }, 
+                       new { onclick = "return confirm('Do you really want to take this book?');" })
                     }
                 }
             </td>
