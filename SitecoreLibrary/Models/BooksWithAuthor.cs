@@ -8,6 +8,7 @@ namespace SitecoreLibrary.Models
         [Display(Name = "Id")]
         public int Id { get; set; }
 
+        [Display(Name = "Book name")]
         [Required(ErrorMessage = "Name is required.")]
         public string BookName { get; set; }
 
@@ -23,6 +24,7 @@ namespace SitecoreLibrary.Models
 
         public Guid TakenByUserId { get; set; }
 
+        [Display(Name = "Author full name")]
         public string FullName
         {
             get

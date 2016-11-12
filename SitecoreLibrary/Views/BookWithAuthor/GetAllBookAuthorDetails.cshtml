@@ -1,6 +1,8 @@
 ﻿@using System.Web.Mvc.Html
 @model IEnumerable<SitecoreLibrary.Models.BooksWithAuthor>
 
+<h2>LIST OF BOOKS</h2>
+
 <p>
     @Html.ActionLink("Add New Book", "AddBookWithAuthor")
 </p>
@@ -16,7 +18,9 @@
     InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace
 }))
 {
-    @Html.DropDownList("SelectList", new SelectList(bookFilterList), "Select books plan", new { onchange = "$(this.form).submit();" })
+    <div class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+            @Html.DropDownList("SelectList", new SelectList(bookFilterList), "Select books plan", new { onchange = "$(this.form).submit();" })
+    </div>
 }
 
 @Html.Partial("_BooksWithAuthorsTable")
