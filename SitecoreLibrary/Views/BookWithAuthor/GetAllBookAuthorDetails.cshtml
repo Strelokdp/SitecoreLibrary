@@ -1,18 +1,25 @@
-﻿@model IEnumerable<SitecoreLibrary.Models.BooksWithAuthor>
+﻿@using System.Web.Mvc.Html
+@model IEnumerable<SitecoreLibrary.Models.BooksWithAuthor>
 
 <p>
     @Html.ActionLink("Add New Book", "AddBookWithAuthor")
 </p>
 
-@using (Html.BeginForm("GetAllBookAuthorDetails", "BookWithAuthor", FormMethod.Get))
-{
-    <p>
-        @Html.DropDownList("SelectList")
-        <input type="submit" value="Filter" />
-    </p>
+@{
+    var bookFilterList = new List<string> { "All books", "Available books", "Taken books" } as IEnumerable<string>;
 }
 
-<table class="table">
+@using (Ajax.BeginForm("GetAllBookAuthorDetails", "BookWithAuthor", new AjaxOptions
+{
+    HttpMethod = "Get",
+    UpdateTargetId = "SearchResults",
+    InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace
+}))
+{
+    @Html.DropDownList("SelectList", new SelectList(bookFilterList), "Select book plan", new { onchange = "$(this.form).submit();" })
+}
+
+<table id="SearchResults">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.FullName)
@@ -55,6 +62,9 @@
                 }
             </td>
         </tr>
-   }
+                    }
 </table>
 
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
