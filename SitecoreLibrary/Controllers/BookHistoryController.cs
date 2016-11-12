@@ -12,10 +12,10 @@ namespace SitecoreLibrary.Controllers
         private BookHistoryRepository _bookHistoryRepo = new BookHistoryRepository();
         
         // GET: BookHistory
-        public ActionResult Index()
+        public ActionResult Index(int bookId)
         {
             ModelState.Clear();
-            var booksHistory = _bookHistoryRepo.GetAllBooksHistory();
+            var booksHistory = _bookHistoryRepo.GetAllBooksHistory().Where(b=>b.BookId == bookId).ToList();
             return View(booksHistory);
         }
     }

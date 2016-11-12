@@ -220,5 +220,10 @@ namespace SitecoreLibrary.Controllers
 
             }
         }
+
+        public ActionResult BookHistory(int bookID)
+        {
+            return RedirectToAction("Index", "BookHistory", new { bookId = bookID });
+        }
     }
 }

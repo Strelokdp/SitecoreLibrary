@@ -40,7 +40,7 @@ namespace SitecoreLibrary.Repository
                     {
                         Id = Convert.ToInt32(dr["HistoryRecID"]),
                         BookName = Convert.ToString(dr["BookName"]),
-                        //BookId = Convert.ToInt32(dr["BookId"]),
+                        BookId = Convert.ToInt32(dr["BookId"]),
                         Date = Convert.ToDateTime(dr["TimeTaken"]),
                         UserName = Convert.ToString(dr["UserName"])
                     }
