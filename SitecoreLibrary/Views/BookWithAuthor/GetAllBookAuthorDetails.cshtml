@@ -4,6 +4,14 @@
     @Html.ActionLink("Add New Book", "AddBookWithAuthor")
 </p>
 
+@using (Html.BeginForm("GetAllBookAuthorDetails", "BookWithAuthor", FormMethod.Get))
+{
+    <p>
+        @Html.DropDownList("SelectList")
+        <input type="submit" value="Filter" />
+    </p>
+}
+
 <table class="table">
     <tr>
         <th>
@@ -13,7 +21,7 @@
         <th>
             @Html.DisplayNameFor(model => model.BookName)
         </th>
-        
+
     </tr>
 
     @foreach (var item in Model)
@@ -30,22 +38,23 @@
             </td>
 
             <td>
-                @Html.ActionLink("Edit", "EditBookWithAuthorDetails", new {id = item.Id}) |
-                @Html.ActionLink("Delete", "DeleteBookWithAuthor", new {id = item.Id}, new {onclick = "return confirm('Are you sure about delete?');"})
+                @Html.ActionLink("Edit", "EditBookWithAuthorDetails", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteBookWithAuthor", new { id = item.Id }, new { onclick = "return confirm('Are you sure about delete?');" })
             </td>
 
             <td>
                 @{
                     if (Request.IsAuthenticated && !item.IsTaken)
                     {
-                        @Html.ActionLink("Take book", "TakeBookWithUser", new { bookId = item.Id, userId = (Guid) (Membership.GetUser().ProviderUserKey)}, new {onclick = "return confirm('Do you really want to take this book?');"})
+                        @Html.ActionLink("Take book", "TakeBookWithUser", new { bookId = item.Id, userId = (Guid)(Membership.GetUser().ProviderUserKey) }, new { onclick = "return confirm('Do you really want to take this book?');" })
                     }
-                    else if (Request.IsAuthenticated && item.TakenByUserId == (Guid) (Membership.GetUser().ProviderUserKey))
+                    else if (Request.IsAuthenticated && item.TakenByUserId == (Guid)(Membership.GetUser().ProviderUserKey))
                     {
-                        @Html.ActionLink("Return book", "ReturnBookWithUser", new { bookId = item.Id }, new {onclick = "return confirm('Do you really want to take this book?');"})
+                        @Html.ActionLink("Return book", "ReturnBookWithUser", new { bookId = item.Id }, new { onclick = "return confirm('Do you really want to take this book?');" })
                     }
                 }
             </td>
         </tr>
-    }
+   }
 </table>
+

@@ -2,17 +2,43 @@
 using SitecoreLibrary.Models;
 using SitecoreLibrary.Repository;
 using System.Web.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SitecoreLibrary.Controllers
 {
     public class BookWithAuthorController : Controller
     {
         // GET: Book/GetAllBookAuthorDetails
-        public ActionResult GetAllBookAuthorDetails()
+        public ActionResult GetAllBookAuthorDetails(string SelectList)
         {
             BookWithAuthorRepository bookAuthRepo = new BookWithAuthorRepository();
             ModelState.Clear();
-            return View(bookAuthRepo.GetAllBooksWithAuthors());
+
+            var bookFilterList = new List<string> {"All books", "Available books", "Taken books"} as IEnumerable<string>;
+
+            ViewBag.SelectList = new SelectList(bookFilterList);
+
+            var bookList = bookAuthRepo.GetAllBooksWithAuthors();
+
+            
+                switch (SelectList)
+                {
+                    case ("All books"):
+                        bookList = bookAuthRepo.GetAllBooksWithAuthors();
+                        break;
+
+                    case ("Available books"):
+                        bookList = bookAuthRepo.GetAllBooksWithAuthors().Where(x => !x.IsTaken).ToList();
+                        break;
+
+                    case ("Taken books"):
+                        bookList = bookAuthRepo.GetAllBooksWithAuthors().Where(x => x.IsTaken).ToList();
+                        break;
+                }
+            
+
+            return View(bookList);
         }
 
         // GET: Book/AddBookAuthor
