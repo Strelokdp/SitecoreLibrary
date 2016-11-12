@@ -137,7 +137,7 @@ namespace SitecoreLibrary.Repository
 
         }
 
-        public bool TakeBook(int bookId)
+        public bool TakeBook(int bookId, Guid userId)
         {
 
             connection();
@@ -145,6 +145,7 @@ namespace SitecoreLibrary.Repository
 
             com.CommandType = CommandType.StoredProcedure;
             com.Parameters.AddWithValue("@BookToAuthorId", bookId);
+            com.Parameters.AddWithValue("@UserId", userId);
 
             con.Open();
             int i = com.ExecuteNonQuery();

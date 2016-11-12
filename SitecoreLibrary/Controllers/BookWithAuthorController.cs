@@ -1,4 +1,5 @@
-﻿using SitecoreLibrary.Models;
+﻿using System;
+using SitecoreLibrary.Models;
 using SitecoreLibrary.Repository;
 using System.Web.Mvc;
 
@@ -89,12 +90,12 @@ namespace SitecoreLibrary.Controllers
             }
         }
 
-        public ActionResult TakeBookWithUser(int bookId)
+        public ActionResult TakeBookWithUser(int bookId, Guid userId)
         {
             try
             {
                 BookWithAuthorRepository bookAuthRepo = new BookWithAuthorRepository();
-                if (bookAuthRepo.TakeBook(bookId))
+                if (bookAuthRepo.TakeBook(bookId, userId))
                 {
                     ViewBag.AlertMsg = "Book was taken";
 

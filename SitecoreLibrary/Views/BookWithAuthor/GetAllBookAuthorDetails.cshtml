@@ -38,7 +38,7 @@
                 @{
                     if (Request.IsAuthenticated && !item.IsTaken)
                     {
-                        @Html.ActionLink("Take book", "TakeBookWithUser", new { bookId = item.Id}, new { onclick = "return confirm('Do you really want to take this book?');"})
+                        @Html.ActionLink("Take book", "TakeBookWithUser", new { bookId = item.Id, userId = (Guid)(Membership.GetUser().ProviderUserKey) }, new { onclick = "return confirm('Do you really want to take this book?');"})
                     }
                 }
             </td>
