@@ -11,37 +11,58 @@ namespace SitecoreLibrary.Controllers
 {
     public class BookWithAuthorController : Controller
     {
+        private BookWithAuthorRepository _bookAuthRep = new BookWithAuthorRepository();
+
         // GET: Book/GetAllBookAuthorDetails
-        public ActionResult GetAllBookAuthorDetails(string SelectList)
+        public ActionResult GetAllBookAuthorDetails(string SelectList, string sortOrder)
         {
-            BookWithAuthorRepository bookAuthRepo = new BookWithAuthorRepository();
             ModelState.Clear();
+
+            ViewBag.BookSortParm = String.IsNullOrEmpty(sortOrder) ? "book_desc" : "";
+            ViewBag.AuthorSortParm = sortOrder == "Author" ? "author_desc" : "Author";
 
             var bookFilterList = new List<string> {"All books", "Available books", "Taken books"} as IEnumerable<string>;
 
             ViewBag.SelectList = new SelectList(bookFilterList);
 
-            var bookList = bookAuthRepo.GetAllBooksWithAuthors();
+            var bookList = _bookAuthRep.GetAllBooksWithAuthors();
 
             if (!String.IsNullOrEmpty(SelectList))
             {
                 switch (SelectList)
                 {
                     case ("Available books"):
-                        bookList = bookAuthRepo.GetAllBooksWithAuthors().Where(x => !x.IsTaken).ToList();
+                        bookList = _bookAuthRep.GetAllBooksWithAuthors().Where(x => !x.IsTaken).ToList();
                         break;
 
                     case ("Taken books"):
-                        bookList = bookAuthRepo.GetAllBooksWithAuthors().Where(x => x.IsTaken).ToList();
+                        bookList = _bookAuthRep.GetAllBooksWithAuthors().Where(x => x.IsTaken).ToList();
                         break;
 
                     default:
-                        bookList = bookAuthRepo.GetAllBooksWithAuthors();
+                        bookList = _bookAuthRep.GetAllBooksWithAuthors();
                         break;
                 }
             }
 
+            switch (sortOrder)
+            {
+                case "author_desc":
+                    bookList = bookList.OrderByDescending(s => s.FullName).ToList();
+                    break;
+                case "Author":
+                    bookList = bookList.OrderBy(s => s.FullName).ToList();
+                    break;
+                case "book_desc":
+                    bookList = bookList.OrderByDescending(s => s.BookName).ToList();
+                    break;
+                default:
+                    bookList = bookList.OrderBy(s => s.BookName).ToList();
+                    break;
+            }
+
             return View(bookList);
+
         }
 
         // GET: Book/AddBookAuthor
@@ -58,9 +79,7 @@ namespace SitecoreLibrary.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    BookWithAuthorRepository bookAuthRepo = new BookWithAuthorRepository();
-
-                    if (bookAuthRepo.AddBookWithAuthor(bookWithAuthor))
+                    if (_bookAuthRep.AddBookWithAuthor(bookWithAuthor))
                     {
                         ViewBag.Message = "Book details added successfully";
                     }
@@ -77,8 +96,7 @@ namespace SitecoreLibrary.Controllers
         // GET: Book/EditBookDetails/5
         public ActionResult EditBookWithAuthorDetails(int id)
         {
-            BookWithAuthorRepository bookAuthRepo = new BookWithAuthorRepository();
-            return View(bookAuthRepo.GetAllBooksWithAuthors().Find(book => book.Id == id));
+            return View(_bookAuthRep.GetAllBooksWithAuthors().Find(book => book.Id == id));
 
         }
 
@@ -89,8 +107,7 @@ namespace SitecoreLibrary.Controllers
         {
             try
             {
-                BookWithAuthorRepository bookAuthRepo = new BookWithAuthorRepository();
-                bookAuthRepo.UpdateBook(obj);
+                _bookAuthRep.UpdateBook(obj);
                 return RedirectToAction("GetAllBookAuthorDetails");
             }
             catch
@@ -104,8 +121,7 @@ namespace SitecoreLibrary.Controllers
         {
             try
             {
-                BookWithAuthorRepository bookAuthRepo = new BookWithAuthorRepository();
-                if (bookAuthRepo.DeleteBook(id))
+                if (_bookAuthRep.DeleteBook(id))
                 {
                     ViewBag.AlertMsg = "Book details deleted successfully";
 
@@ -123,8 +139,7 @@ namespace SitecoreLibrary.Controllers
         {
             try
             {
-                BookWithAuthorRepository bookAuthRepo = new BookWithAuthorRepository();
-                if (bookAuthRepo.TakeBook(bookId, userId))
+                if (_bookAuthRep.TakeBook(bookId, userId))
                 {
                     ViewBag.AlertMsg = "Book was taken";
                     var fromAddress = new MailAddress("sitecorelibrary2016@gmail.com", "Sitecore Library");
@@ -165,8 +180,7 @@ namespace SitecoreLibrary.Controllers
         {
             try
             {
-                BookWithAuthorRepository bookAuthRepo = new BookWithAuthorRepository();
-                if (bookAuthRepo.ReturnBook(bookId))
+                if (_bookAuthRep.ReturnBook(bookId))
                 {
                     ViewBag.AlertMsg = "Book was returned";
                     var fromAddress = new MailAddress("sitecorelibrary2016@gmail.com", "Sitecore Library");

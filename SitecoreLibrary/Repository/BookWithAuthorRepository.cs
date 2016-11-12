@@ -10,6 +10,7 @@ namespace SitecoreLibrary.Repository
     public class BookWithAuthorRepository
     {
         private SqlConnection con;
+
         //To Handle connection related activities    
         private void connection()
         {

@@ -1,14 +1,15 @@
-﻿@model IEnumerable<SitecoreLibrary.Models.BooksWithAuthor>
+﻿@using System.Web.Configuration
+@model IEnumerable<SitecoreLibrary.Models.BooksWithAuthor>
 
 
 <table id="SearchResults" class="table table.bordered table-hover">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FullName)
+            @Html.ActionLink("Author Name", "GetAllBookAuthorDetails", new { sortOrder = ViewBag.AuthorSortParm })
         </th>
-
+            
         <th>
-            @Html.DisplayNameFor(model => model.BookName)
+            @Html.ActionLink("Book Name", "GetAllBookAuthorDetails", new { sortOrder = ViewBag.BookSortParm })
         </th>
 
     </tr>
