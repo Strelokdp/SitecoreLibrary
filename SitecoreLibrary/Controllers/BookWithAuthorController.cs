@@ -4,6 +4,8 @@ using SitecoreLibrary.Repository;
 using System.Web.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 
 namespace SitecoreLibrary.Controllers
 {
@@ -125,7 +127,29 @@ namespace SitecoreLibrary.Controllers
                 if (bookAuthRepo.TakeBook(bookId, userId))
                 {
                     ViewBag.AlertMsg = "Book was taken";
+                    var fromAddress = new MailAddress("sitecorelibrary2016@gmail.com", "Sitecore Library");
+                    var toAddress = new MailAddress("laeda@list.ru", "Dear mr.");
+                    const string fromPassword = "sitecore2016";
+                    const string subject = "Book has been taken";
+                    const string body = "You have just taken book, don't forget to return it";
 
+                    var smtp = new SmtpClient
+                    {
+                        Host = "smtp.gmail.com",
+                        Port = 587,
+                        EnableSsl = true,
+                        DeliveryMethod = SmtpDeliveryMethod.Network,
+                        UseDefaultCredentials = false,
+                        Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                    };
+                    using (var message = new MailMessage(fromAddress, toAddress)
+                    {
+                        Subject = subject,
+                        Body = body
+                    })
+                    {
+                        smtp.Send(message);
+                    }
                 }
                 return RedirectToAction("GetAllBookAuthorDetails");
 
@@ -145,6 +169,29 @@ namespace SitecoreLibrary.Controllers
                 if (bookAuthRepo.ReturnBook(bookId))
                 {
                     ViewBag.AlertMsg = "Book was returned";
+                    var fromAddress = new MailAddress("sitecorelibrary2016@gmail.com", "Sitecore Library");
+                    var toAddress = new MailAddress("laeda@list.ru", "Dear Mr., ");
+                    const string fromPassword = "sitecore2016";
+                    const string subject = "Book has been returned";
+                    const string body = "You have just returned book. Hope you liked it";
+
+                    var smtp = new SmtpClient
+                    {
+                        Host = "smtp.gmail.com",
+                        Port = 587,
+                        EnableSsl = true,
+                        DeliveryMethod = SmtpDeliveryMethod.Network,
+                        UseDefaultCredentials = false,
+                        Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                    };
+                    using (var message = new MailMessage(fromAddress, toAddress)
+                    {
+                        Subject = subject,
+                        Body = body
+                    })
+                    {
+                        smtp.Send(message);
+                    }
 
                 }
                 return RedirectToAction("GetAllBookAuthorDetails");
