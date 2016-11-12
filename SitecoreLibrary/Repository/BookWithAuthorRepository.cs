@@ -67,14 +67,7 @@ namespace SitecoreLibrary.Repository
             con.Open();
             int i = com.ExecuteNonQuery();
             con.Close();
-            if (i >= 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return (i >= 1);
         }
 
         //To Update Book details    
@@ -92,14 +85,7 @@ namespace SitecoreLibrary.Repository
             con.Open();
             int i = com.ExecuteNonQuery();
             con.Close();
-            if (i >= 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return (i >= 1);
         }
 
         //To delete Book details    
@@ -115,16 +101,7 @@ namespace SitecoreLibrary.Repository
             con.Open();
             int i = com.ExecuteNonQuery();
             con.Close();
-            if (i >= 1)
-            {
-                return true;
-            }
-
-            else
-            {
-
-                return false;
-            }
+            return (i >= 1);
         }
 
         public bool TakeBook(int bookId, Guid userId)
@@ -140,14 +117,7 @@ namespace SitecoreLibrary.Repository
             con.Open();
             int i = com.ExecuteNonQuery();
             con.Close();
-            if (i >= 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return (i >= 1);
         }
 
         public bool ReturnBook(int bookId)
@@ -162,14 +132,7 @@ namespace SitecoreLibrary.Repository
             con.Open();
             int i = com.ExecuteNonQuery();
             con.Close();
-            if (i >= 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return (i >= 1);
         }
     }
 }

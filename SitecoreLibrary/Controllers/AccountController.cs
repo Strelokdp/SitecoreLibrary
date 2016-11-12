@@ -61,7 +61,7 @@ namespace SitecoreLibrary.Controllers
                 if (createStatus == MembershipCreateStatus.Success)
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, false);
-                    return RedirectToAction("Login", "Account");
+                    return RedirectToAction("GetAllBookAuthorDetails", "BookWithAuthor");
                 }
                 else
                 {
