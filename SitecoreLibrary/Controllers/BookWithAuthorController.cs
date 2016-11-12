@@ -109,5 +109,25 @@ namespace SitecoreLibrary.Controllers
 
             }
         }
+
+        public ActionResult ReturnBookWithUser(int bookId)
+        {
+            try
+            {
+                BookWithAuthorRepository bookAuthRepo = new BookWithAuthorRepository();
+                if (bookAuthRepo.ReturnBook(bookId))
+                {
+                    ViewBag.AlertMsg = "Book was returned";
+
+                }
+                return RedirectToAction("GetAllBookAuthorDetails");
+
+            }
+            catch
+            {
+                return View();
+
+            }
+        }
     }
 }

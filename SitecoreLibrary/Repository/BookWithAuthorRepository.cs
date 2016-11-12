@@ -69,13 +69,10 @@ namespace SitecoreLibrary.Repository
             con.Close();
             if (i >= 1)
             {
-
                 return true;
-
             }
             else
             {
-
                 return false;
             }
         }
@@ -97,18 +94,14 @@ namespace SitecoreLibrary.Repository
             con.Close();
             if (i >= 1)
             {
-
                 return true;
-
             }
             else
             {
-
                 return false;
             }
-
-
         }
+
         //To delete Book details    
         public bool DeleteBook(int Id)
         {
@@ -124,17 +117,14 @@ namespace SitecoreLibrary.Repository
             con.Close();
             if (i >= 1)
             {
-
                 return true;
-
             }
+
             else
             {
 
                 return false;
             }
-
-
         }
 
         public bool TakeBook(int bookId, Guid userId)
@@ -152,17 +142,34 @@ namespace SitecoreLibrary.Repository
             con.Close();
             if (i >= 1)
             {
-
                 return true;
-
             }
             else
             {
-
                 return false;
             }
+        }
 
+        public bool ReturnBook(int bookId)
+        {
 
+            connection();
+            SqlCommand com = new SqlCommand("ReturnBookWithUser", con);
+
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@BookToAuthorId", bookId);
+
+            con.Open();
+            int i = com.ExecuteNonQuery();
+            con.Close();
+            if (i >= 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
