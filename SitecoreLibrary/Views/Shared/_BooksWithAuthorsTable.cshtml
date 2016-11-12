@@ -1,15 +1,16 @@
-﻿@using System.Web.Configuration
-@model IEnumerable<SitecoreLibrary.Models.BooksWithAuthor>
-
+﻿@model PagedList.IPagedList<SitecoreLibrary.Models.BooksWithAuthor>
+@using System.Web.Configuration
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 <table id="SearchResults" class="table table.bordered table-hover">
     <tr>
         <th>
-            @Html.ActionLink("Author Name", "GetAllBookAuthorDetails", new { sortOrder = ViewBag.AuthorSortParm })
+            @Html.ActionLink("Author Name", "GetAllBookAuthorDetails", new { sortOrder = ViewBag.AuthorSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
             
         <th>
-            @Html.ActionLink("Book Name", "GetAllBookAuthorDetails", new { sortOrder = ViewBag.BookSortParm })
+            @Html.ActionLink("Book Name", "GetAllBookAuthorDetails", new { sortOrder = ViewBag.BookSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
 
     </tr>
@@ -46,13 +47,13 @@
                     else if (Request.IsAuthenticated && item.TakenByUserId == (Guid)(Membership.GetUser().ProviderUserKey))
                     {
                         @Html.ActionLink("Return book", "ReturnBookWithUser",
-                       new { bookId = item.Id ,
-                           bookName = item.BookName,
-                           eMail = Membership.GetUser().Email },
-                       new { onclick = "return confirm('Do you really want to take this book?');" })
+                            new { bookId = item.Id ,
+                                bookName = item.BookName,
+                                eMail = Membership.GetUser().Email },
+                            new { onclick = "return confirm('Do you really want to take this book?');" })
                     }
                 }
             </td>
         </tr>
-                    }
+    }
 </table>

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using PagedList;
 
 namespace SitecoreLibrary.Controllers
 {
@@ -14,10 +15,11 @@ namespace SitecoreLibrary.Controllers
         private BookWithAuthorRepository _bookAuthRep = new BookWithAuthorRepository();
 
         // GET: Book/GetAllBookAuthorDetails
-        public ActionResult GetAllBookAuthorDetails(string SelectList, string sortOrder)
+        public ActionResult GetAllBookAuthorDetails(string SelectList, string currentFilter, string sortOrder, int? page)
         {
             ModelState.Clear();
 
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.BookSortParm = String.IsNullOrEmpty(sortOrder) ? "book_desc" : "";
             ViewBag.AuthorSortParm = sortOrder == "Author" ? "author_desc" : "Author";
 
@@ -61,17 +63,19 @@ namespace SitecoreLibrary.Controllers
                     break;
             }
 
-            return View(bookList);
+            int pageSize = 4;
+            int pageNumber = (page ?? 1);
+            return View(bookList.ToPagedList(pageNumber, pageSize));
 
         }
 
-        // GET: Book/AddBookAuthor
+        // GET: Book/AddBookWithAuthor
         public ActionResult AddBookWithAuthor()
         {
             return View();
         }
 
-        // POST: Book/AddBookAuthor
+        // POST: Book/AddBookWithAuthor
         [HttpPost]
         public ActionResult AddBookWithAuthor(BooksWithAuthor bookWithAuthor)
         {
@@ -102,7 +106,6 @@ namespace SitecoreLibrary.Controllers
 
         // POST: Book/EditBookDetails/5
         [HttpPost]
-
         public ActionResult EditBookWithAuthorDetails(int id, BooksWithAuthor obj)
         {
             try
