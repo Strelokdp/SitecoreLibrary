@@ -9,30 +9,28 @@ namespace SitecoreLibrary.Repository
 {
     public class BookHistoryRepository
     {
-        private SqlConnection con;
-        //To Handle connection related activities    
-        private void connection()
+        private SqlConnection _con;
+  
+        private void Connection()
         {
             string constr = ConfigurationManager.ConnectionStrings["SitecoreConn"].ToString();
-            con = new SqlConnection(constr);
+            _con = new SqlConnection(constr);
 
         }
 
-        //To view Author details with generic list     
         public List<BookHistory> GetAllBooksHistory()
         {
-            connection();
+            Connection();
             List<BookHistory> booksHistory = new List<BookHistory>();
 
-            SqlCommand com = new SqlCommand("GetBooksHistory", con);
+            SqlCommand com = new SqlCommand("GetBooksHistory", _con);
             com.CommandType = CommandType.StoredProcedure;
             SqlDataAdapter da = new SqlDataAdapter(com);
             DataTable dt = new DataTable();
 
-            con.Open();
+            _con.Open();
             da.Fill(dt);
-            con.Close();
-            //Bind Author generic list using dataRow     
+            _con.Close();
             foreach (DataRow dr in dt.Rows)
             {
                 booksHistory.Add(

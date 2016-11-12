@@ -9,7 +9,7 @@ namespace SitecoreLibrary.Controllers
 {
     public class BookHistoryController : Controller
     {
-        private BookHistoryRepository _bookHistoryRepo = new BookHistoryRepository();
+        private readonly BookHistoryRepository _bookHistoryRepo = new BookHistoryRepository();
         
         // GET: BookHistory
         public ActionResult Index(int bookId)

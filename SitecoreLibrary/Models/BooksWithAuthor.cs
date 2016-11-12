@@ -25,12 +25,6 @@ namespace SitecoreLibrary.Models
         public Guid TakenByUserId { get; set; }
 
         [Display(Name = "Author full name")]
-        public string FullName
-        {
-            get
-            {
-                return (FirstName + " " + LastName);
-            }
-        }
+        public string FullName => (FirstName + " " + LastName);
     }
 }

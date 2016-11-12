@@ -9,31 +9,29 @@ namespace SitecoreLibrary.Repository
 {
     public class BookWithAuthorRepository
     {
-        private SqlConnection con;
-
-        //To Handle connection related activities    
-        private void connection()
+        private SqlConnection _con;
+        
+        private void Connection()
         {
             string constr = ConfigurationManager.ConnectionStrings["SitecoreConn"].ToString();
-            con = new SqlConnection(constr);
+            _con = new SqlConnection(constr);
 
         }
 
-        //To view Author details with generic list     
         public List<BooksWithAuthor> GetAllBooksWithAuthors()
         {
-            connection();
+            Connection();
             List<BooksWithAuthor> booksWithAuthorList = new List<BooksWithAuthor>();
 
-            SqlCommand com = new SqlCommand("GetBooksWithAuthors", con);
+            SqlCommand com = new SqlCommand("GetBooksWithAuthors", _con);
             com.CommandType = CommandType.StoredProcedure;
             SqlDataAdapter da = new SqlDataAdapter(com);
             DataTable dt = new DataTable();
 
-            con.Open();
+            _con.Open();
             da.Fill(dt);
-            con.Close();
-            //Bind Author generic list using dataRow     
+            _con.Close();
+               
             foreach (DataRow dr in dt.Rows)
             {
                 booksWithAuthorList.Add(
@@ -52,87 +50,85 @@ namespace SitecoreLibrary.Repository
             return booksWithAuthorList;
         }
 
-        //To Add Book details   
         public bool AddBookWithAuthor(BooksWithAuthor obj)
         {
 
-            connection();
-            SqlCommand com = new SqlCommand("AddNewBookWithAuthorDetails", con);
+            Connection();
+            SqlCommand com = new SqlCommand("AddNewBookWithAuthorDetails", _con);
             com.CommandType = CommandType.StoredProcedure;
+
             com.Parameters.AddWithValue("@BookName", obj.BookName);
             com.Parameters.AddWithValue("@FirstName", obj.FirstName);
             com.Parameters.AddWithValue("@LastName", obj.LastName);
-            //com.Parameters.AddWithValue("@TakenByUserID", obj.TakenByUserId);
-            //com.Parameters.AddWithValue("@IsTaken", obj.IsTaken);
 
-            con.Open();
+            _con.Open();
             int i = com.ExecuteNonQuery();
-            con.Close();
+            _con.Close();
             return (i >= 1);
         }
 
-        //To Update Book details    
         public bool UpdateBook(BooksWithAuthor obj)
         {
 
-            connection();
-            SqlCommand com = new SqlCommand("UpdateBookWithAuthorDetails", con);
+            Connection();
+            SqlCommand com = new SqlCommand("UpdateBookWithAuthorDetails", _con);
 
             com.CommandType = CommandType.StoredProcedure;
+
             com.Parameters.AddWithValue("@Id", obj.Id);
             com.Parameters.AddWithValue("@BookName", obj.BookName);
             com.Parameters.AddWithValue("@FirstName", obj.FirstName);
             com.Parameters.AddWithValue("@LastName", obj.LastName);
-            con.Open();
+
+            _con.Open();
             int i = com.ExecuteNonQuery();
-            con.Close();
+            _con.Close();
             return (i >= 1);
         }
 
-        //To delete Book details    
         public bool DeleteBook(int Id)
         {
 
-            connection();
-            SqlCommand com = new SqlCommand("DeleteBookWithAuthorById", con);
+            Connection();
+            SqlCommand com = new SqlCommand("DeleteBookWithAuthorById", _con);
 
             com.CommandType = CommandType.StoredProcedure;
             com.Parameters.AddWithValue("@BookToAuthorId", Id);
             
-            con.Open();
+            _con.Open();
             int i = com.ExecuteNonQuery();
-            con.Close();
+            _con.Close();
             return (i >= 1);
         }
 
         public bool TakeBook(int bookId, Guid userId)
         {
 
-            connection();
-            SqlCommand com = new SqlCommand("TakeBookWithUser", con);
+            Connection();
+            SqlCommand com = new SqlCommand("TakeBookWithUser", _con);
 
             com.CommandType = CommandType.StoredProcedure;
             com.Parameters.AddWithValue("@BookToAuthorId", bookId);
             com.Parameters.AddWithValue("@UserId", userId);
 
-            con.Open();
+            _con.Open();
             int i = com.ExecuteNonQuery();
-            con.Close();
+            _con.Close();
             return (i >= 1);
         }
 
         public bool ReturnBook(int bookId)
         {
 
-            connection();
-            SqlCommand com = new SqlCommand("ReturnBookWithUser", con);
-
+            Connection();
+            SqlCommand com = new SqlCommand("ReturnBookWithUser", _con);
             com.CommandType = CommandType.StoredProcedure;
+
             com.Parameters.AddWithValue("@BookToAuthorId", bookId);
 
-            con.Open();
+            _con.Open();
             int i = com.ExecuteNonQuery();
-            con.Close();
+            _con.Close();
             return (i >= 1);
         }
     }

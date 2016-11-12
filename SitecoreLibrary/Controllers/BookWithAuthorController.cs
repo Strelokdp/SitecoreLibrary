@@ -12,16 +12,16 @@ namespace SitecoreLibrary.Controllers
 {
     public class BookWithAuthorController : Controller
     {
-        private BookWithAuthorRepository _bookAuthRep = new BookWithAuthorRepository();
+        private readonly BookWithAuthorRepository _bookAuthRep = new BookWithAuthorRepository();
 
-        // GET: Book/GetAllBookAuthorDetails
+        // GET: BookWithAuthor/GetAllBookAuthorDetails
         public ActionResult GetAllBookAuthorDetails(string SelectList, string currentFilter, string sortOrder, int? page)
         {
             ModelState.Clear();
 
             ViewBag.CurrentSort = sortOrder;
             ViewBag.BookSortParm = String.IsNullOrEmpty(sortOrder) ? "book_desc" : "";
-            ViewBag.AuthorSortParm = sortOrder == "Author" ? "author_desc" : "Author";
+            ViewBag.AuthorSortParm = sortOrder == "author" ? "author_desc" : "author";
 
             var bookFilterList = new List<string> {"All books", "Available books", "Taken books"} as IEnumerable<string>;
 
@@ -52,7 +52,7 @@ namespace SitecoreLibrary.Controllers
                 case "author_desc":
                     bookList = bookList.OrderByDescending(s => s.FullName).ToList();
                     break;
-                case "Author":
+                case "author":
                     bookList = bookList.OrderBy(s => s.FullName).ToList();
                     break;
                 case "book_desc":
@@ -69,7 +69,7 @@ namespace SitecoreLibrary.Controllers
 
         }
 
-        // GET: Book/AddBookWithAuthor
+        // GET: BookWithAuthor/AddBookWithAuthor
         public ActionResult AddBookWithAuthor()
         {
             return View();
@@ -97,14 +97,14 @@ namespace SitecoreLibrary.Controllers
             }
         }
 
-        // GET: Book/EditBookDetails/5
+        // GET: BookWithAuthor/EditBookWithAuthorDetails/5
         public ActionResult EditBookWithAuthorDetails(int id)
         {
             return View(_bookAuthRep.GetAllBooksWithAuthors().Find(book => book.Id == id));
 
         }
 
-        // POST: Book/EditBookDetails/5
+        // POST:BookWithAuthor/EditBookWithAuthorDetails/5
         [HttpPost]
         public ActionResult EditBookWithAuthorDetails(int id, BooksWithAuthor obj)
         {
@@ -119,7 +119,7 @@ namespace SitecoreLibrary.Controllers
             }
         }
 
-        // GET: Book/DeleteBook/5
+        // GET: BookWithAuthor/DeleteBookWithAuthor/5
         public ActionResult DeleteBookWithAuthor(int id)
         {
             try
@@ -138,6 +138,7 @@ namespace SitecoreLibrary.Controllers
             }
         }
 
+        // POST:BookWithAuthor/TakeBookWithUser
         public ActionResult TakeBookWithUser(int bookId, Guid userId, string eMail, string bookName)
         {
             try
@@ -179,6 +180,7 @@ namespace SitecoreLibrary.Controllers
             }
         }
 
+        // POST:BookWithAuthor/ReturnBookWithUser
         public ActionResult ReturnBookWithUser(int bookId, string eMail, string bookName)
         {
             try
@@ -221,6 +223,7 @@ namespace SitecoreLibrary.Controllers
             }
         }
 
+        // GET:BookWithAuthor/BookHistory
         public ActionResult BookHistory(int bookID)
         {
             return RedirectToAction("Index", "BookHistory", new { bookId = bookID });
