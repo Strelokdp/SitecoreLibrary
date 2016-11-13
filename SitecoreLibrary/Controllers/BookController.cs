@@ -1,12 +1,12 @@
 ﻿using System;
-using SitecoreLibrary.Repository;
 using System.Web.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using PagedList;
-using SitecoreLibrary.Contracts;
+using SitecoreLibrary.DAL.Contracts;
+using SitecoreLibrary.DAL.Repository;
 using SitecoreLibrary.ViewModels;
 
 namespace SitecoreLibrary.Controllers

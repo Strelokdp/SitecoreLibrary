@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using SitecoreLibrary.Contracts;
+using SitecoreLibrary.DAL.Contracts;
 using SitecoreLibrary.ViewModels;
 
-namespace SitecoreLibrary.Repository
+namespace SitecoreLibrary.DAL.Repository
 {
     public class BookRepository : IBookRepository
     {
