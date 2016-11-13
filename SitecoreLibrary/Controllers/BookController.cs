@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using PagedList;
+using SitecoreLibrary.BAL.Services;
 using SitecoreLibrary.DAL.Contracts;
 using SitecoreLibrary.DAL.Repository;
 using SitecoreLibrary.ViewModels;
@@ -13,7 +14,7 @@ namespace SitecoreLibrary.Controllers
 {
     public class BookController : Controller
     {
-        private readonly IBookRepository _bookAuthRep = new BookRepository();
+        private readonly BookService _bookService = new BookService();
 
         // GET: BookWithAuthor/GetAllBooks
         public ActionResult GetAllBooks(string selectList, string currentFilter, string sortOrder, int? page)
@@ -28,43 +29,11 @@ namespace SitecoreLibrary.Controllers
 
             ViewBag.selectList = new SelectList(bookFilterList);
 
-            var bookList = _bookAuthRep.GetAllBooks();
+            var bookList = _bookService.GetAllBooks();
 
-            if (!string.IsNullOrEmpty(selectList))
-            {
-                switch (selectList)
-                {
-                    case ("Available books"):
-                        bookList = _bookAuthRep.GetAllBooks().Where( x => !x.IsTaken ). 
-                                                              Where( x=>x.BookQuantity>0 )
-                                                              .ToList();
-                        break;
-
-                    case ("Taken books"):
-                        bookList = _bookAuthRep.GetAllBooks().Where(x => x.IsTaken).ToList();
-                        break;
-
-                    default:
-                        bookList = _bookAuthRep.GetAllBooks();
-                        break;
-                }
-            }
-
-            switch (sortOrder)
-            {
-                case "author_desc":
-                    bookList = bookList.OrderByDescending(s => s.FullName).ToList();
-                    break;
-                case "author":
-                    bookList = bookList.OrderBy(s => s.FullName).ToList();
-                    break;
-                case "book_desc":
-                    bookList = bookList.OrderByDescending(s => s.BookName).ToList();
-                    break;
-                default:
-                    bookList = bookList.OrderBy(s => s.BookName).ToList();
-                    break;
-            }
+            bookList = _bookService.FilterBooks(selectList, bookList);
+            
+            bookList = _bookService.SortBooks(sortOrder, bookList);
 
             int pageSize = 4;
             int pageNumber = (page ?? 1);
@@ -89,7 +58,7 @@ namespace SitecoreLibrary.Controllers
                     return View();
                 }
 
-                if (_bookAuthRep.AddBook(book))
+                if (_bookService.AddBook(book))
                 {
                     ViewBag.Message = "Book details added successfully";
                 }
@@ -105,7 +74,7 @@ namespace SitecoreLibrary.Controllers
         // GET: BookWithAuthor/EditBook/5
         public ActionResult EditBook(int id)
         {
-            return View(_bookAuthRep.GetAllBooks().Find(book => book.Id == id));
+            return View(_bookService.GetAllBooks().Find(book => book.Id == id));
 
         }
 
@@ -115,7 +84,7 @@ namespace SitecoreLibrary.Controllers
         {
             try
             {
-                _bookAuthRep.UpdateBook(obj);
+                _bookService.UpdateBook(obj);
                 return RedirectToAction("GetAllBooks");
             }
             catch
@@ -129,7 +98,7 @@ namespace SitecoreLibrary.Controllers
         {
             try
             {
-                if (_bookAuthRep.DeleteBook(id))
+                if (_bookService.DeleteBook(id))
                 {
                     ViewBag.AlertMsg = "Book details deleted successfully";
 
@@ -148,7 +117,7 @@ namespace SitecoreLibrary.Controllers
         {
             try
             {
-                if (!_bookAuthRep.TakeBook(bookId, userId))
+                if (!_bookService.TakeBook(bookId, userId))
                 {
                     return RedirectToAction("GetAllBooks");
                 }
@@ -193,7 +162,7 @@ namespace SitecoreLibrary.Controllers
         {
             try
             {
-                if (!_bookAuthRep.ReturnBook(bookId))
+                if (!_bookService.ReturnBook(bookId))
                 {
                     return RedirectToAction("GetAllBooks");
                 }

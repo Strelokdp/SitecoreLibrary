@@ -11,10 +11,8 @@ namespace SitecoreLibrary.BAL.Services
     {
         private readonly IBookRepository _bookAuthRep = new BookRepository();
 
-        public List<Books> SortBooks(string sortOrder)
+        public List<Books> SortBooks(string sortOrder, List<Books> bookList)
         {
-            var bookList = new List<Books>();
-
             switch (sortOrder)
             {
                 case "author_desc":
