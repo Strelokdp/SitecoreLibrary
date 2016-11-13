@@ -10,6 +10,9 @@ namespace SitecoreLibrary.ViewModels
         
         public int BookRecordId { get; set; }
 
+        [Display(Name = "Book Quantity")]
+        public int BookQuantity { get; set; }
+
         [Display(Name = "Book name")]
         [Required(ErrorMessage = "Name is required.")]
         public string BookName { get; set; }

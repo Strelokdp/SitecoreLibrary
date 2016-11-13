@@ -38,6 +38,7 @@ namespace SitecoreLibrary.Repository
                     {
                         Id = Convert.ToInt32(dr["BookToAuthorId"]),
                         BookRecordId = Convert.ToInt32(dr["BookID"]),
+                        BookQuantity = Convert.ToInt32(dr["BookQuantity"]),
                         BookName = Convert.ToString(dr["BookName"]),
                         FirstName = Convert.ToString(dr["FirstName"]),
                         LastName = Convert.ToString(dr["LastName"]),
@@ -62,6 +63,7 @@ namespace SitecoreLibrary.Repository
             com.Parameters.AddWithValue("@BookName", obj.BookName);
             com.Parameters.AddWithValue("@FirstName", obj.FirstName);
             com.Parameters.AddWithValue("@LastName", obj.LastName);
+            com.Parameters.AddWithValue("@BookQuantity", obj.BookQuantity);
 
             _con.Open();
             int i = com.ExecuteNonQuery();
@@ -83,6 +85,7 @@ namespace SitecoreLibrary.Repository
             com.Parameters.AddWithValue("@BookName", obj.BookName);
             com.Parameters.AddWithValue("@FirstName", obj.FirstName);
             com.Parameters.AddWithValue("@LastName", obj.LastName);
+            com.Parameters.AddWithValue("@BookQuantity", obj.BookQuantity);
 
             _con.Open();
             int i = com.ExecuteNonQuery();

@@ -10,6 +10,8 @@
             @Html.ActionLink("Book Name", "GetAllBooks", new { sortOrder = ViewBag.BookSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         
+        <th> Quantity </th>
+        
         <th>
             Modification
         </th>
@@ -22,8 +24,7 @@
                 }
             }
         </th>
-
-    </tr>
+        </tr>
 
     @foreach (var item in Model)
     {
@@ -36,6 +37,10 @@
 
             <td>
                 @Html.ActionLink(item.BookName, "BookHistory", new {bookID = item.BookRecordId})
+            </td>
+            
+            <td>
+                @Html.DisplayFor(model => item.BookQuantity)
             </td>
 
             <td>
