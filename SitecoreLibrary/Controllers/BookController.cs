@@ -34,7 +34,9 @@ namespace SitecoreLibrary.Controllers
                 switch (selectList)
                 {
                     case ("Available books"):
-                        bookList = _bookAuthRep.GetAllBooks().Where(x => !x.IsTaken).ToList();
+                        bookList = _bookAuthRep.GetAllBooks().Where( x => !x.IsTaken ). 
+                                                              Where( x=>x.BookQuantity>0 )
+                                                              .ToList();
                         break;
 
                     case ("Taken books"):

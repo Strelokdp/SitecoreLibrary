@@ -50,7 +50,7 @@
 
             <td>
                 @{
-                    if (Request.IsAuthenticated && !item.IsTaken)
+                    if (Request.IsAuthenticated && !item.IsTaken && item.BookQuantity>0 )
                     {
                         @Html.ActionLink("Take book", "TakeBookWithUser",
                             new { bookId = item.Id,
