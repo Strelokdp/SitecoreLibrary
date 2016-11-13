@@ -19,7 +19,7 @@ namespace SitecoreLibrary.DAL.Repository
 
         }
 
-        public IList<Books> GetAllBooks2()
+        public List<Books> GetAllBooks()
         {
             return GetFromDbSp("GetBooksWithAuthors", (dr) => new Books
             {
@@ -33,40 +33,7 @@ namespace SitecoreLibrary.DAL.Repository
                 IsTaken = Convert.ToBoolean(dr["IsTaken"])
             });
         }
-
-        public List<Books> GetAllBooks()
-        {
-            Connection();
-            List<Books> booksWithAuthorList = new List<Books>();
-
-            SqlCommand com = new SqlCommand("GetBooksWithAuthors", _con) {CommandType = CommandType.StoredProcedure};
-            SqlDataAdapter da = new SqlDataAdapter(com);
-            DataTable dt = new DataTable();
-
-            _con.Open();
-            da.Fill(dt);
-            _con.Close();
-               
-            foreach (DataRow dr in dt.Rows)
-            {
-                booksWithAuthorList.Add(
-                    new Books
-                    {
-                        Id = Convert.ToInt32(dr["BookToAuthorId"]),
-                        BookRecordId = Convert.ToInt32(dr["BookID"]),
-                        BookQuantity = Convert.ToInt32(dr["BookQuantity"]),
-                        BookName = Convert.ToString(dr["BookName"]),
-                        FirstName = Convert.ToString(dr["FirstName"]),
-                        LastName = Convert.ToString(dr["LastName"]),
-                        TakenByUserId = Guid.Parse(dr["TakenByUserID"].ToString()),
-                        IsTaken = Convert.ToBoolean(dr["IsTaken"])
-                    }
-                );
-            }
-
-            return booksWithAuthorList;
-        }
-
+        
         public bool AddBook(Books obj)
         {
 
@@ -128,7 +95,6 @@ namespace SitecoreLibrary.DAL.Repository
 
         public bool TakeBook(int bookId, Guid userId)
         {
-
             Connection();
             SqlCommand com = new SqlCommand("TakeBookWithUser", _con) {CommandType = CommandType.StoredProcedure};
 

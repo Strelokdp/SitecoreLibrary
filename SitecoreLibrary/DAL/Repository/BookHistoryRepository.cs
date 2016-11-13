@@ -8,7 +8,7 @@ using SitecoreLibrary.ViewModels;
 
 namespace SitecoreLibrary.DAL.Repository
 {
-    public class BookHistoryRepository:IBookHistoryRepository
+    public class BookHistoryRepository: GenericRepository, IBookHistoryRepository
     {
         private SqlConnection _con;
   
@@ -21,30 +21,14 @@ namespace SitecoreLibrary.DAL.Repository
 
         public List<BookHistory> GetBooksHistory()
         {
-            Connection();
-            List<BookHistory> booksHistory = new List<BookHistory>();
-
-            SqlCommand com = new SqlCommand("GetBooksHistory", _con) {CommandType = CommandType.StoredProcedure};
-            SqlDataAdapter da = new SqlDataAdapter(com);
-            DataTable dt = new DataTable();
-
-            _con.Open();
-            da.Fill(dt);
-            _con.Close();
-            foreach (DataRow dr in dt.Rows)
+            return GetFromDbSp("GetBooksHistory", (dr) => new BookHistory
             {
-                booksHistory.Add(
-                    new BookHistory
-                    {
-                        Id = Convert.ToInt32(dr["HistoryRecID"]),
-                        BookName = Convert.ToString(dr["BookName"]),
-                        BookId = Convert.ToInt32(dr["BookId"]),
-                        Date = Convert.ToDateTime(dr["TimeTaken"]),
-                        UserName = Convert.ToString(dr["UserName"])
-                    }
-                );
-            }
-            return booksHistory;
+                Id = Convert.ToInt32(dr["HistoryRecID"]),
+                BookName = Convert.ToString(dr["BookName"]),
+                BookId = Convert.ToInt32(dr["BookId"]),
+                Date = Convert.ToDateTime(dr["TimeTaken"]),
+                UserName = Convert.ToString(dr["UserName"])
+            });
         }
     }
 }
