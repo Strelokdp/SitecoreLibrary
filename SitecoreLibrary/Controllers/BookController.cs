@@ -10,9 +10,9 @@ using PagedList;
 
 namespace SitecoreLibrary.Controllers
 {
-    public class BookWithAuthorController : Controller
+    public class BookController : Controller
     {
-        private readonly BookWithAuthorRepository _bookAuthRep = new BookWithAuthorRepository();
+        private readonly BookRepository _bookAuthRep = new BookRepository();
 
         // GET: BookWithAuthor/GetAllBooks
         public ActionResult GetAllBooks(string SelectList, string currentFilter, string sortOrder, int? page)
@@ -77,7 +77,7 @@ namespace SitecoreLibrary.Controllers
 
         // POST: Book/AddBook
         [HttpPost]
-        public ActionResult AddBook(BooksWithAuthor bookWithAuthor)
+        public ActionResult AddBook(Books book)
         {
             try
             {
@@ -86,7 +86,7 @@ namespace SitecoreLibrary.Controllers
                     return View();
                 }
 
-                if (_bookAuthRep.AddBook(bookWithAuthor))
+                if (_bookAuthRep.AddBook(book))
                 {
                     ViewBag.Message = "Book details added successfully";
                 }
@@ -108,7 +108,7 @@ namespace SitecoreLibrary.Controllers
 
         // POST:BookWithAuthor/EditBook/5
         [HttpPost]
-        public ActionResult EditBook(int id, BooksWithAuthor obj)
+        public ActionResult EditBook(int id, Books obj)
         {
             try
             {

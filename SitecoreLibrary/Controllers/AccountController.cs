@@ -28,7 +28,7 @@ namespace SitecoreLibrary.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("GetAllBooks", "BookWithAuthor");
+                        return RedirectToAction("GetAllBooks", "Book");
                     }
                 }
                 else
@@ -61,7 +61,7 @@ namespace SitecoreLibrary.Controllers
                 if (createStatus == MembershipCreateStatus.Success)
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, false);
-                    return RedirectToAction("GetAllBooks", "BookWithAuthor");
+                    return RedirectToAction("GetAllBooks", "Book");
                 }
                 else
                 {

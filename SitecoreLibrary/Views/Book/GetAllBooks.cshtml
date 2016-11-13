@@ -1,7 +1,7 @@
 ﻿@using System.Web.Mvc.Html
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
-@model PagedList.IPagedList<SitecoreLibrary.Models.BooksWithAuthor>
+@model PagedList.IPagedList<SitecoreLibrary.Models.Books>
 
 <h2>LIST OF BOOKS</h2>
 
@@ -13,7 +13,7 @@
     var bookFilterList = new List<string> {"All books", "Available books", "Taken books" } as IEnumerable<string>;
 }
 
-@using (Ajax.BeginForm("GetAllBooks", "BookWithAuthor", new AjaxOptions
+@using (Ajax.BeginForm("GetAllBooks", "Book", new AjaxOptions
 {
     HttpMethod = "Get",
     UpdateTargetId = "SearchResults",

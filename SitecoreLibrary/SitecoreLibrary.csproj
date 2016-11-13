@@ -165,17 +165,17 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BookHistoryController.cs" />
-    <Compile Include="Controllers\BookWithAuthorController.cs" />
+    <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BookHistory.cs" />
-    <Compile Include="Models\BooksWithAuthor.cs" />
+    <Compile Include="Models\Books.cs" />
     <Compile Include="Models\LogOn.cs" />
     <Compile Include="Models\Register.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\BookHistoryRepository.cs" />
-    <Compile Include="Repository\BookWithAuthorRepository.cs" />
+    <Compile Include="Repository\BookRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -186,9 +186,9 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\BookWithAuthor\GetAllBooks.cshtml" />
-    <Content Include="Views\BookWithAuthor\AddBook.cshtml" />
-    <Content Include="Views\BookWithAuthor\EditBook.cshtml" />
+    <Content Include="Views\Book\GetAllBooks.cshtml" />
+    <Content Include="Views\Book\AddBook.cshtml" />
+    <Content Include="Views\Book\EditBook.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />

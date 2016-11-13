@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 
 namespace SitecoreLibrary.Repository
 {
-    public class BookWithAuthorRepository
+    public class BookRepository
     {
         private SqlConnection _con;
         
@@ -18,13 +18,12 @@ namespace SitecoreLibrary.Repository
 
         }
 
-        public List<BooksWithAuthor> GetAllBooks()
+        public List<Books> GetAllBooks()
         {
             Connection();
-            List<BooksWithAuthor> booksWithAuthorList = new List<BooksWithAuthor>();
+            List<Books> booksWithAuthorList = new List<Books>();
 
-            SqlCommand com = new SqlCommand("GetBooksWithAuthors", _con);
-            com.CommandType = CommandType.StoredProcedure;
+            SqlCommand com = new SqlCommand("GetBooksWithAuthors", _con) {CommandType = CommandType.StoredProcedure};
             SqlDataAdapter da = new SqlDataAdapter(com);
             DataTable dt = new DataTable();
 
@@ -35,7 +34,7 @@ namespace SitecoreLibrary.Repository
             foreach (DataRow dr in dt.Rows)
             {
                 booksWithAuthorList.Add(
-                    new BooksWithAuthor
+                    new Books
                     {
                         Id = Convert.ToInt32(dr["BookToAuthorId"]),
                         BookName = Convert.ToString(dr["BookName"]),
@@ -50,12 +49,14 @@ namespace SitecoreLibrary.Repository
             return booksWithAuthorList;
         }
 
-        public bool AddBook(BooksWithAuthor obj)
+        public bool AddBook(Books obj)
         {
 
             Connection();
-            SqlCommand com = new SqlCommand("AddNewBookWithAuthorDetails", _con);
-            com.CommandType = CommandType.StoredProcedure;
+            SqlCommand com = new SqlCommand("AddNewBookWithAuthorDetails", _con)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
 
             com.Parameters.AddWithValue("@BookName", obj.BookName);
             com.Parameters.AddWithValue("@FirstName", obj.FirstName);
@@ -67,13 +68,15 @@ namespace SitecoreLibrary.Repository
             return (i >= 1);
         }
 
-        public bool UpdateBook(BooksWithAuthor obj)
+        public bool UpdateBook(Books obj)
         {
 
             Connection();
-            SqlCommand com = new SqlCommand("UpdateBookWithAuthorDetails", _con);
+            SqlCommand com = new SqlCommand("UpdateBookWithAuthorDetails", _con)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
 
-            com.CommandType = CommandType.StoredProcedure;
 
             com.Parameters.AddWithValue("@Id", obj.Id);
             com.Parameters.AddWithValue("@BookName", obj.BookName);
@@ -90,9 +93,11 @@ namespace SitecoreLibrary.Repository
         {
 
             Connection();
-            SqlCommand com = new SqlCommand("DeleteBookWithAuthorById", _con);
+            SqlCommand com = new SqlCommand("DeleteBookWithAuthorById", _con)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
 
-            com.CommandType = CommandType.StoredProcedure;
             com.Parameters.AddWithValue("@BookToAuthorId", Id);
             
             _con.Open();
@@ -105,9 +110,8 @@ namespace SitecoreLibrary.Repository
         {
 
             Connection();
-            SqlCommand com = new SqlCommand("TakeBookWithUser", _con);
+            SqlCommand com = new SqlCommand("TakeBookWithUser", _con) {CommandType = CommandType.StoredProcedure};
 
-            com.CommandType = CommandType.StoredProcedure;
             com.Parameters.AddWithValue("@BookToAuthorId", bookId);
             com.Parameters.AddWithValue("@UserId", userId);
 
@@ -121,8 +125,7 @@ namespace SitecoreLibrary.Repository
         {
 
             Connection();
-            SqlCommand com = new SqlCommand("ReturnBookWithUser", _con);
-            com.CommandType = CommandType.StoredProcedure;
+            SqlCommand com = new SqlCommand("ReturnBookWithUser", _con) {CommandType = CommandType.StoredProcedure};
 
             com.Parameters.AddWithValue("@BookToAuthorId", bookId);
 

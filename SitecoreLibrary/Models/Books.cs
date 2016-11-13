@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SitecoreLibrary.Models
 {
-    public class BooksWithAuthor
+    public class Books
     {
         [Display(Name = "Id")]
         public int Id { get; set; }
