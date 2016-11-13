@@ -1,7 +1,6 @@
 ﻿using Ninject;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 using SitecoreLibrary.DAL.Contracts;
 using SitecoreLibrary.DAL.Repository;

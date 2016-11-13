@@ -8,7 +8,7 @@ using SitecoreLibrary.ViewModels;
 
 namespace SitecoreLibrary.DAL.Repository
 {
-    public class BookRepository : IBookRepository
+    public class BookRepository : GenericRepository, IBookRepository
     {
         private SqlConnection _con;
         
@@ -17,6 +17,21 @@ namespace SitecoreLibrary.DAL.Repository
             string constr = ConfigurationManager.ConnectionStrings["SitecoreConn"].ToString();
             _con = new SqlConnection(constr);
 
+        }
+
+        public IList<Books> GetAllBooks2()
+        {
+            return GetFromDbSp("GetBooksWithAuthors", (dr) => new Books
+            {
+                Id = Convert.ToInt32(dr["BookToAuthorId"]),
+                BookRecordId = Convert.ToInt32(dr["BookID"]),
+                BookQuantity = Convert.ToInt32(dr["BookQuantity"]),
+                BookName = Convert.ToString(dr["BookName"]),
+                FirstName = Convert.ToString(dr["FirstName"]),
+                LastName = Convert.ToString(dr["LastName"]),
+                TakenByUserId = Guid.Parse(dr["TakenByUserID"].ToString()),
+                IsTaken = Convert.ToBoolean(dr["IsTaken"])
+            });
         }
 
         public List<Books> GetAllBooks()
