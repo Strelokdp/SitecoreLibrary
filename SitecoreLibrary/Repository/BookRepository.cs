@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using SitecoreLibrary.Contracts;
 using SitecoreLibrary.ViewModels;
 
 namespace SitecoreLibrary.Repository
 {
-    public class BookRepository
+    public class BookRepository : IBookRepository
     {
         private SqlConnection _con;
         

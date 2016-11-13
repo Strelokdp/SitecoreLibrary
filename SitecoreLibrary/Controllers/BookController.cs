@@ -6,13 +6,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using PagedList;
+using SitecoreLibrary.Contracts;
 using SitecoreLibrary.ViewModels;
 
 namespace SitecoreLibrary.Controllers
 {
     public class BookController : Controller
     {
-        private readonly BookRepository _bookAuthRep = new BookRepository();
+        private readonly IBookRepository _bookAuthRep = new BookRepository();
 
         // GET: BookWithAuthor/GetAllBooks
         public ActionResult GetAllBooks(string selectList, string currentFilter, string sortOrder, int? page)
