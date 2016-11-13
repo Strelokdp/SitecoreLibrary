@@ -1,9 +1,9 @@
-﻿using SitecoreLibrary.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using SitecoreLibrary.ViewModels;
 
 namespace SitecoreLibrary.Repository
 {
@@ -37,6 +37,7 @@ namespace SitecoreLibrary.Repository
                     new Books
                     {
                         Id = Convert.ToInt32(dr["BookToAuthorId"]),
+                        BookRecordId = Convert.ToInt32(dr["BookID"]),
                         BookName = Convert.ToString(dr["BookName"]),
                         FirstName = Convert.ToString(dr["FirstName"]),
                         LastName = Convert.ToString(dr["LastName"]),

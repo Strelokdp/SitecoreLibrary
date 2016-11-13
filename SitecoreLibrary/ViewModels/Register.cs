@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SitecoreLibrary.Models
+namespace SitecoreLibrary.ViewModels
 {
     public class Register
     {

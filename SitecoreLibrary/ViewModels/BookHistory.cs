@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
-namespace SitecoreLibrary.Models
+namespace SitecoreLibrary.ViewModels
 {
     public class BookHistory
     {

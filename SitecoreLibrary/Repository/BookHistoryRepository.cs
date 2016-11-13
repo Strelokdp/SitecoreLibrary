@@ -1,9 +1,9 @@
-﻿using SitecoreLibrary.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using SitecoreLibrary.ViewModels;
 
 namespace SitecoreLibrary.Repository
 {

@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Web.Security;
-using SitecoreLibrary.Models;
+using SitecoreLibrary.ViewModels;
 
 namespace SitecoreLibrary.Controllers
 {

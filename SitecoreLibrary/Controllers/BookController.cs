@@ -1,5 +1,4 @@
 ﻿using System;
-using SitecoreLibrary.Models;
 using SitecoreLibrary.Repository;
 using System.Web.Mvc;
 using System.Collections.Generic;
@@ -7,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using PagedList;
+using SitecoreLibrary.ViewModels;
 
 namespace SitecoreLibrary.Controllers
 {
@@ -15,7 +15,7 @@ namespace SitecoreLibrary.Controllers
         private readonly BookRepository _bookAuthRep = new BookRepository();
 
         // GET: BookWithAuthor/GetAllBooks
-        public ActionResult GetAllBooks(string SelectList, string currentFilter, string sortOrder, int? page)
+        public ActionResult GetAllBooks(string selectList, string currentFilter, string sortOrder, int? page)
         {
             ModelState.Clear();
 
@@ -25,13 +25,13 @@ namespace SitecoreLibrary.Controllers
 
             var bookFilterList = new List<string> {"All books", "Available books", "Taken books"} as IEnumerable<string>;
 
-            ViewBag.SelectList = new SelectList(bookFilterList);
+            ViewBag.selectList = new SelectList(bookFilterList);
 
             var bookList = _bookAuthRep.GetAllBooks();
 
-            if (!String.IsNullOrEmpty(SelectList))
+            if (!string.IsNullOrEmpty(selectList))
             {
-                switch (SelectList)
+                switch (selectList)
                 {
                     case ("Available books"):
                         bookList = _bookAuthRep.GetAllBooks().Where(x => !x.IsTaken).ToList();
@@ -145,33 +145,36 @@ namespace SitecoreLibrary.Controllers
         {
             try
             {
-                if (_bookAuthRep.TakeBook(bookId, userId))
+                if (!_bookAuthRep.TakeBook(bookId, userId))
                 {
-                    ViewBag.AlertMsg = "Book was taken";
-                    var fromAddress = new MailAddress("sitecorelibrary2016@gmail.com", "Sitecore Library");
-                    var toAddress = new MailAddress(eMail, eMail);
-                    const string fromPassword = "sitecore2016";
-                    const string subject = " has been taken";
-                    const string body = "You have just taken book, don't forget to return it";
-
-                    var smtp = new SmtpClient
-                    {
-                        Host = "smtp.gmail.com",
-                        Port = 587,
-                        EnableSsl = true,
-                        DeliveryMethod = SmtpDeliveryMethod.Network,
-                        UseDefaultCredentials = false,
-                        Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
-                    };
-                    using (var message = new MailMessage(fromAddress, toAddress)
-                    {
-                        Subject = bookName + subject,
-                        Body = body
-                    })
-                    {
-                        smtp.Send(message);
-                    }
+                    return RedirectToAction("GetAllBooks");
                 }
+
+                ViewBag.AlertMsg = "Book was taken";
+                var fromAddress = new MailAddress("sitecorelibrary2016@gmail.com", "Sitecore Library");
+                var toAddress = new MailAddress(eMail, eMail);
+                const string fromPassword = "sitecore2016";
+                const string subject = " has been taken";
+                const string body = "You have just taken book, don't forget to return it";
+
+                var smtp = new SmtpClient
+                {
+                    Host = "smtp.gmail.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                };
+                using (var message = new MailMessage(fromAddress, toAddress)
+                {
+                    Subject = bookName + subject,
+                    Body = body
+                })
+                {
+                    smtp.Send(message);
+                }
+
                 return RedirectToAction("GetAllBooks");
 
             }
@@ -187,33 +190,34 @@ namespace SitecoreLibrary.Controllers
         {
             try
             {
-                if (_bookAuthRep.ReturnBook(bookId))
+                if (!_bookAuthRep.ReturnBook(bookId))
                 {
-                    ViewBag.AlertMsg = "Book was returned";
-                    var fromAddress = new MailAddress("sitecorelibrary2016@gmail.com", "Sitecore Library");
-                    var toAddress = new MailAddress(eMail, eMail);
-                    const string fromPassword = "sitecore2016";
-                    const string subject = "Book has been returned";
-                    const string body = "You have just returned book. Hope you liked it";
+                    return RedirectToAction("GetAllBooks");
+                }
 
-                    var smtp = new SmtpClient
-                    {
-                        Host = "smtp.gmail.com",
-                        Port = 587,
-                        EnableSsl = true,
-                        DeliveryMethod = SmtpDeliveryMethod.Network,
-                        UseDefaultCredentials = false,
-                        Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
-                    };
-                    using (var message = new MailMessage(fromAddress, toAddress)
-                    {
-                        Subject = subject,
-                        Body = body
-                    })
-                    {
-                        smtp.Send(message);
-                    }
+                ViewBag.AlertMsg = "Book was returned";
+                var fromAddress = new MailAddress("sitecorelibrary2016@gmail.com", "Sitecore Library");
+                var toAddress = new MailAddress(eMail, eMail);
+                const string fromPassword = "sitecore2016";
+                const string subject = "Book has been returned";
+                const string body = "You have just returned book. Hope you liked it";
 
+                var smtp = new SmtpClient
+                {
+                    Host = "smtp.gmail.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                };
+                using (var message = new MailMessage(fromAddress, toAddress)
+                {
+                    Subject = subject,
+                    Body = body
+                })
+                {
+                    smtp.Send(message);
                 }
                 return RedirectToAction("GetAllBooks");
 

@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<SitecoreLibrary.Models.Books>
+﻿@model PagedList.IPagedList<SitecoreLibrary.ViewModels.Books>
 
 <table id="SearchResults" class="table table.bordered table-hover">
     <tr>
@@ -35,7 +35,7 @@
             </td>
 
             <td>
-                @Html.ActionLink(item.BookName, "BookHistory", new {bookId = item.Id})
+                @Html.ActionLink(item.BookName, "BookHistory", new {bookID = item.BookRecordId})
             </td>
 
             <td>

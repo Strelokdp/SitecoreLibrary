@@ -1,12 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace SitecoreLibrary.Models
+namespace SitecoreLibrary.ViewModels
 {
     public class Books
     {
         [Display(Name = "Id")]
         public int Id { get; set; }
+        
+        public int BookRecordId { get; set; }
 
         [Display(Name = "Book name")]
         [Required(ErrorMessage = "Name is required.")]

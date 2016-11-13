@@ -1,7 +1,7 @@
 ﻿@using System.Web.Mvc.Html
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
-@model PagedList.IPagedList<SitecoreLibrary.Models.Books>
+@model PagedList.IPagedList<SitecoreLibrary.ViewModels.Books>
 
 <h2>LIST OF BOOKS</h2>
 
@@ -21,7 +21,7 @@
 }))
 {
     <div class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-            @Html.DropDownList("SelectList", new SelectList(bookFilterList), "Select books plan", new { onchange = "$(this.form).submit();" })
+            @Html.DropDownList("selectList", new SelectList(bookFilterList), "Select books plan", new { onchange = "$(this.form).submit();" })
     </div>
 }
 
