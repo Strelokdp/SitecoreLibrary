@@ -15,7 +15,7 @@ namespace SitecoreLibrary.Controllers
         public ActionResult Index(int bookId)
         {
             ModelState.Clear();
-            var booksHistory = _bookHistoryRepo.GetAllBooksHistory().Where(b=>b.BookId == bookId).ToList();
+            var booksHistory = _bookHistoryRepo.GetBooksHistory().Where(b=>b.BookId == bookId).ToList();
             return View(booksHistory);
         }
     }

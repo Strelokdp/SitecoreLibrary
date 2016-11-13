@@ -14,35 +14,35 @@ namespace SitecoreLibrary.Controllers
     {
         private readonly BookWithAuthorRepository _bookAuthRep = new BookWithAuthorRepository();
 
-        // GET: BookWithAuthor/GetAllBookAuthorDetails
-        public ActionResult GetAllBookAuthorDetails(string SelectList, string currentFilter, string sortOrder, int? page)
+        // GET: BookWithAuthor/GetAllBooks
+        public ActionResult GetAllBooks(string SelectList, string currentFilter, string sortOrder, int? page)
         {
             ModelState.Clear();
 
             ViewBag.CurrentSort = sortOrder;
-            ViewBag.BookSortParm = String.IsNullOrEmpty(sortOrder) ? "book_desc" : "";
+            ViewBag.BookSortParm = string.IsNullOrEmpty(sortOrder) ? "book_desc" : "";
             ViewBag.AuthorSortParm = sortOrder == "author" ? "author_desc" : "author";
 
             var bookFilterList = new List<string> {"All books", "Available books", "Taken books"} as IEnumerable<string>;
 
             ViewBag.SelectList = new SelectList(bookFilterList);
 
-            var bookList = _bookAuthRep.GetAllBooksWithAuthors();
+            var bookList = _bookAuthRep.GetAllBooks();
 
             if (!String.IsNullOrEmpty(SelectList))
             {
                 switch (SelectList)
                 {
                     case ("Available books"):
-                        bookList = _bookAuthRep.GetAllBooksWithAuthors().Where(x => !x.IsTaken).ToList();
+                        bookList = _bookAuthRep.GetAllBooks().Where(x => !x.IsTaken).ToList();
                         break;
 
                     case ("Taken books"):
-                        bookList = _bookAuthRep.GetAllBooksWithAuthors().Where(x => x.IsTaken).ToList();
+                        bookList = _bookAuthRep.GetAllBooks().Where(x => x.IsTaken).ToList();
                         break;
 
                     default:
-                        bookList = _bookAuthRep.GetAllBooksWithAuthors();
+                        bookList = _bookAuthRep.GetAllBooks();
                         break;
                 }
             }
@@ -69,24 +69,26 @@ namespace SitecoreLibrary.Controllers
 
         }
 
-        // GET: BookWithAuthor/AddBookWithAuthor
-        public ActionResult AddBookWithAuthor()
+        // GET: BookWithAuthor/AddBook
+        public ActionResult AddBook()
         {
             return View();
         }
 
-        // POST: Book/AddBookWithAuthor
+        // POST: Book/AddBook
         [HttpPost]
-        public ActionResult AddBookWithAuthor(BooksWithAuthor bookWithAuthor)
+        public ActionResult AddBook(BooksWithAuthor bookWithAuthor)
         {
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
-                    if (_bookAuthRep.AddBookWithAuthor(bookWithAuthor))
-                    {
-                        ViewBag.Message = "Book details added successfully";
-                    }
+                    return View();
+                }
+
+                if (_bookAuthRep.AddBook(bookWithAuthor))
+                {
+                    ViewBag.Message = "Book details added successfully";
                 }
 
                 return View();
@@ -97,21 +99,21 @@ namespace SitecoreLibrary.Controllers
             }
         }
 
-        // GET: BookWithAuthor/EditBookWithAuthorDetails/5
-        public ActionResult EditBookWithAuthorDetails(int id)
+        // GET: BookWithAuthor/EditBook/5
+        public ActionResult EditBook(int id)
         {
-            return View(_bookAuthRep.GetAllBooksWithAuthors().Find(book => book.Id == id));
+            return View(_bookAuthRep.GetAllBooks().Find(book => book.Id == id));
 
         }
 
-        // POST:BookWithAuthor/EditBookWithAuthorDetails/5
+        // POST:BookWithAuthor/EditBook/5
         [HttpPost]
-        public ActionResult EditBookWithAuthorDetails(int id, BooksWithAuthor obj)
+        public ActionResult EditBook(int id, BooksWithAuthor obj)
         {
             try
             {
                 _bookAuthRep.UpdateBook(obj);
-                return RedirectToAction("GetAllBookAuthorDetails");
+                return RedirectToAction("GetAllBooks");
             }
             catch
             {
@@ -119,8 +121,8 @@ namespace SitecoreLibrary.Controllers
             }
         }
 
-        // GET: BookWithAuthor/DeleteBookWithAuthor/5
-        public ActionResult DeleteBookWithAuthor(int id)
+        // GET: BookWithAuthor/DeleteBook/5
+        public ActionResult DeleteBook(int id)
         {
             try
             {
@@ -129,7 +131,7 @@ namespace SitecoreLibrary.Controllers
                     ViewBag.AlertMsg = "Book details deleted successfully";
 
                 }
-                return RedirectToAction("GetAllBookAuthorDetails");
+                return RedirectToAction("GetAllBooks");
 
             }
             catch
@@ -170,7 +172,7 @@ namespace SitecoreLibrary.Controllers
                         smtp.Send(message);
                     }
                 }
-                return RedirectToAction("GetAllBookAuthorDetails");
+                return RedirectToAction("GetAllBooks");
 
             }
             catch
@@ -213,7 +215,7 @@ namespace SitecoreLibrary.Controllers
                     }
 
                 }
-                return RedirectToAction("GetAllBookAuthorDetails");
+                return RedirectToAction("GetAllBooks");
 
             }
             catch

@@ -186,9 +186,9 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\BookWithAuthor\GetAllBookAuthorDetails.cshtml" />
-    <Content Include="Views\BookWithAuthor\AddBookWithAuthor.cshtml" />
-    <Content Include="Views\BookWithAuthor\EditBookWithAuthorDetails.cshtml" />
+    <Content Include="Views\BookWithAuthor\GetAllBooks.cshtml" />
+    <Content Include="Views\BookWithAuthor\AddBook.cshtml" />
+    <Content Include="Views\BookWithAuthor\EditBook.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />

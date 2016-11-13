@@ -6,14 +6,14 @@
 <h2>LIST OF BOOKS</h2>
 
 <p>
-    @Html.ActionLink("Add New Book", "AddBookWithAuthor")
+    @Html.ActionLink("Add New Book", "AddBook")
 </p>
 
 @{
     var bookFilterList = new List<string> {"All books", "Available books", "Taken books" } as IEnumerable<string>;
 }
 
-@using (Ajax.BeginForm("GetAllBookAuthorDetails", "BookWithAuthor", new AjaxOptions
+@using (Ajax.BeginForm("GetAllBooks", "BookWithAuthor", new AjaxOptions
 {
     HttpMethod = "Get",
     UpdateTargetId = "SearchResults",
@@ -30,7 +30,7 @@
 <br />
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-@Html.PagedListPager(Model, page => Url.Action("GetAllBookAuthorDetails",
+@Html.PagedListPager(Model, page => Url.Action("GetAllBooks",
     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>

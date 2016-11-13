@@ -3,11 +3,11 @@
 <table id="SearchResults" class="table table.bordered table-hover">
     <tr>
         <th>
-            @Html.ActionLink("Author Name", "GetAllBookAuthorDetails", new { sortOrder = ViewBag.AuthorSortParm, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("Author Name", "GetAllBooks", new { sortOrder = ViewBag.AuthorSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
             
         <th>
-            @Html.ActionLink("Book Name", "GetAllBookAuthorDetails", new { sortOrder = ViewBag.BookSortParm, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("Book Name", "GetAllBooks", new { sortOrder = ViewBag.BookSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         
         <th>
@@ -39,8 +39,8 @@
             </td>
 
             <td>
-                @Html.ActionLink("Edit", "EditBookWithAuthorDetails", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "DeleteBookWithAuthor", new { id = item.Id }, new { onclick = "return confirm('Are you sure about delete?');" })
+                @Html.ActionLink("Edit", "EditBook", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteBook", new { id = item.Id }, new { onclick = "return confirm('Are you sure about delete?');" })
             </td>
 
             <td>

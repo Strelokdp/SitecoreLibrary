@@ -18,13 +18,12 @@ namespace SitecoreLibrary.Repository
 
         }
 
-        public List<BookHistory> GetAllBooksHistory()
+        public List<BookHistory> GetBooksHistory()
         {
             Connection();
             List<BookHistory> booksHistory = new List<BookHistory>();
 
-            SqlCommand com = new SqlCommand("GetBooksHistory", _con);
-            com.CommandType = CommandType.StoredProcedure;
+            SqlCommand com = new SqlCommand("GetBooksHistory", _con) {CommandType = CommandType.StoredProcedure};
             SqlDataAdapter da = new SqlDataAdapter(com);
             DataTable dt = new DataTable();
 

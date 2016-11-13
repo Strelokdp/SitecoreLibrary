@@ -18,7 +18,7 @@ namespace SitecoreLibrary.Repository
 
         }
 
-        public List<BooksWithAuthor> GetAllBooksWithAuthors()
+        public List<BooksWithAuthor> GetAllBooks()
         {
             Connection();
             List<BooksWithAuthor> booksWithAuthorList = new List<BooksWithAuthor>();
@@ -50,7 +50,7 @@ namespace SitecoreLibrary.Repository
             return booksWithAuthorList;
         }
 
-        public bool AddBookWithAuthor(BooksWithAuthor obj)
+        public bool AddBook(BooksWithAuthor obj)
         {
 
             Connection();
