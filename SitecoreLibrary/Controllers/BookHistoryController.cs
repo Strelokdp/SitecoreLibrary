@@ -7,9 +7,9 @@ namespace SitecoreLibrary.Controllers
 {
     public class BookHistoryController : Controller
     {
-        private readonly BookHistoryService bookHistoryService;
+        private readonly IBookHistoryService bookHistoryService;
 
-        public BookHistoryController(BookHistoryService bookHistoryService)
+        public BookHistoryController(IBookHistoryService bookHistoryService)
         {
             this.bookHistoryService = bookHistoryService;
         }

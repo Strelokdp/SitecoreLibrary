@@ -10,10 +10,10 @@ namespace SitecoreLibrary.Controllers
 {
     public class BookController : Controller
     {
-        private readonly BookService bookService;
-        private readonly PostService postService;
+        private readonly IBookService bookService;
+        private readonly IPostService postService;
 
-        public BookController(BookService bookService, PostService postService)
+        public BookController(IBookService bookService, IPostService postService)
         {
             this.bookService = bookService;
             this.postService = postService;

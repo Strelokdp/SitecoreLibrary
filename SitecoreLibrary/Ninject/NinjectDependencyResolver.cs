@@ -29,7 +29,9 @@ namespace SitecoreLibrary.Ninject
         {
             kernel.Bind<IBookRepository>().To<BookRepository>();
             kernel.Bind<IBookHistoryRepository>().To<BookHistoryRepository>();
-
+            kernel.Bind<IBookHistoryService>().To<BookHistoryService>();
+            kernel.Bind<IBookService>().To<BookService>();
+            kernel.Bind<IPostService>().To<PostService>();
         }
     }
 }

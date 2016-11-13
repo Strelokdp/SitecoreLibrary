@@ -6,6 +6,10 @@ using Ninject;
 using Ninject.Web.Common;
 using SitecoreLibrary;
 using Ninject.Web.Mvc;
+using SitecoreLibrary.BAL.Contracts;
+using SitecoreLibrary.BAL.Services;
+using SitecoreLibrary.DAL.Contracts;
+using SitecoreLibrary.DAL.Repository;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(NinjectWebCommon), "Stop")]
@@ -49,6 +53,11 @@ namespace SitecoreLibrary
         private static void RegisterServices(IKernel kernel)
         {
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
+            kernel.Bind<IBookRepository>().To<BookRepository>();
+            kernel.Bind<IBookHistoryRepository>().To<BookHistoryRepository>();
+            kernel.Bind<IBookHistoryService>().To<BookHistoryService>();
+            kernel.Bind<IBookService>().To<BookService>();
+            kernel.Bind<IPostService>().To<PostService>();
         }
     }
 }

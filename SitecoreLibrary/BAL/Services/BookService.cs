@@ -10,9 +10,9 @@ namespace SitecoreLibrary.BAL.Services
 {
     public class BookService:IBookService
     {
-        private readonly BookRepository bookAuthRep;
+        private readonly IBookRepository bookAuthRep;
 
-        public BookService(BookRepository bookAuthRep)
+        public BookService(IBookRepository bookAuthRep)
         {
             this.bookAuthRep = bookAuthRep;
         }
