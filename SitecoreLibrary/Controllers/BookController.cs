@@ -83,7 +83,8 @@ namespace SitecoreLibrary.Controllers
 
         // POST:BookWithAuthor/EditBook/5
         [HttpPost]
-        public ActionResult EditBook(int id, Books obj)
+        [ValidateAntiForgeryToken]
+        public ActionResult EditBook([Bind(Include = "FirstName,LastName,BookName,BookQuantity")] int id, Books obj)
         {
             try
             {
