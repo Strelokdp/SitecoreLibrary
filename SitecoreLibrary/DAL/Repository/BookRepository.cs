@@ -21,7 +21,7 @@ namespace SitecoreLibrary.DAL.Repository
 
         public List<Books> GetAllBooks()
         {
-            return GetFromDbSp("GetBooksWithAuthors", (dr) => new Books
+            return GetFromDb("GetBooksWithAuthors", (dr) => new Books
             {
                 Id = Convert.ToInt32(dr["BookToAuthorId"]),
                 BookRecordId = Convert.ToInt32(dr["BookID"]),

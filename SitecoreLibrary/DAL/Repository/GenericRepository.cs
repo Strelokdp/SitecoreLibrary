@@ -10,7 +10,7 @@ namespace SitecoreLibrary.DAL.Repository
 {
     public abstract class GenericRepository
     {
-        protected List<T> GetFromDbSp<T>(string spName, Func<DataRow, T> processRowFunc)
+        protected List<T> GetFromDb<T>(string spName, Func<DataRow, T> processRowFunc)
         {
             string constr = ConfigurationManager.ConnectionStrings["SitecoreConn"].ToString();
 

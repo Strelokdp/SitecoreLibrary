@@ -21,7 +21,7 @@ namespace SitecoreLibrary.DAL.Repository
 
         public List<BookHistory> GetBooksHistory()
         {
-            return GetFromDbSp("GetBooksHistory", (dr) => new BookHistory
+            return GetFromDb("GetBooksHistory", (dr) => new BookHistory
             {
                 Id = Convert.ToInt32(dr["HistoryRecID"]),
                 BookName = Convert.ToString(dr["BookName"]),

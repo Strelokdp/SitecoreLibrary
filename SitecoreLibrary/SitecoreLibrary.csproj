@@ -180,6 +180,7 @@
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BAL\Services\BookHistoryService.cs" />
     <Compile Include="BAL\Services\BookService.cs" />
     <Compile Include="BAL\Services\PostService.cs" />
     <Compile Include="DAL\Contracts\IBookHistoryRepository.cs" />
