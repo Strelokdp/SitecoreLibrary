@@ -1,15 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SitecoreLibrary.BAL.Contracts;
 using SitecoreLibrary.DAL.Contracts;
 using SitecoreLibrary.DAL.Repository;
 using SitecoreLibrary.ViewModels;
 
 namespace SitecoreLibrary.BAL.Services
 {
-    public class BookService
+    public class BookService:IBookService
     {
-        private readonly IBookRepository _bookAuthRep = new BookRepository();
+        private readonly BookRepository bookAuthRep;
+
+        public BookService(BookRepository bookAuthRep)
+        {
+            this.bookAuthRep = bookAuthRep;
+        }
 
         public List<Books> SortBooks(string sortOrder, List<Books> bookList)
         {
@@ -39,17 +45,17 @@ namespace SitecoreLibrary.BAL.Services
                 switch (selectList)
                 {
                     case ("Available books"):
-                        bookList = _bookAuthRep.GetAllBooks().Where(x => !x.IsTaken).
+                        bookList = bookAuthRep.GetAllBooks().Where(x => !x.IsTaken).
                                                               Where(x => x.BookQuantity > 0)
                                                               .ToList();
                         break;
 
                     case ("Taken books"):
-                        bookList = _bookAuthRep.GetAllBooks().Where(x => x.IsTaken).ToList();
+                        bookList = bookAuthRep.GetAllBooks().Where(x => x.IsTaken).ToList();
                         break;
 
                     default:
-                        bookList = _bookAuthRep.GetAllBooks();
+                        bookList = bookAuthRep.GetAllBooks();
                         break;
                 }
             }
@@ -58,32 +64,32 @@ namespace SitecoreLibrary.BAL.Services
 
         public List<Books> GetAllBooks()
         {
-            return _bookAuthRep.GetAllBooks();
+            return bookAuthRep.GetAllBooks();
         }
 
         public bool AddBook(Books book)
         {
-            return _bookAuthRep.AddBook(book);
+            return bookAuthRep.AddBook(book);
         }
 
         public bool UpdateBook(Books book)
         {
-            return _bookAuthRep.UpdateBook(book);
+            return bookAuthRep.UpdateBook(book);
         }
 
         public bool DeleteBook(int Id)
         {
-            return _bookAuthRep.DeleteBook(Id);
+            return bookAuthRep.DeleteBook(Id);
         }
 
         public bool TakeBook(int bookId, Guid userId)
         {
-            return _bookAuthRep.TakeBook(bookId, userId);
+            return bookAuthRep.TakeBook(bookId, userId);
         }
 
         public bool ReturnBook(int bookId)
         {
-            return _bookAuthRep.ReturnBook(bookId);
+            return bookAuthRep.ReturnBook(bookId);
         }
     }
 }

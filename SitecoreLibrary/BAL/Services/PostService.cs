@@ -1,9 +1,10 @@
 ﻿using System.Net;
 using System.Net.Mail;
+using SitecoreLibrary.BAL.Contracts;
 
 namespace SitecoreLibrary.BAL.Services
 {
-    public class PostService
+    public class PostService:IPostService
     {
         public void SendBookTakenEmail(string eMail, string bookName)
         {

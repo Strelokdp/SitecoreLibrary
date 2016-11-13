@@ -4,13 +4,20 @@ using System.Collections.Generic;
 using PagedList;
 using SitecoreLibrary.BAL.Services;
 using SitecoreLibrary.ViewModels;
+using SitecoreLibrary.BAL.Contracts;
 
 namespace SitecoreLibrary.Controllers
 {
     public class BookController : Controller
     {
-        private readonly BookService _bookService = new BookService();
-        private readonly PostService _postService = new PostService();
+        private readonly BookService bookService;
+        private readonly PostService postService;
+
+        public BookController(BookService bookService, PostService postService)
+        {
+            this.bookService = bookService;
+            this.postService = postService;
+        }
 
         // GET: BookWithAuthor/GetAllBooks
         public ActionResult GetAllBooks(string selectList, string currentFilter, string sortOrder, int? page)
@@ -25,11 +32,11 @@ namespace SitecoreLibrary.Controllers
 
             ViewBag.selectList = new SelectList(bookFilterList);
 
-            var bookList = _bookService.GetAllBooks();
+            var bookList = bookService.GetAllBooks();
 
-            bookList = _bookService.FilterBooks(selectList, bookList);
+            bookList = bookService.FilterBooks(selectList, bookList);
             
-            bookList = _bookService.SortBooks(sortOrder, bookList);
+            bookList = bookService.SortBooks(sortOrder, bookList);
 
             int pageSize = 4;
             int pageNumber = (page ?? 1);
@@ -54,7 +61,7 @@ namespace SitecoreLibrary.Controllers
                     return View();
                 }
 
-                if (_bookService.AddBook(book))
+                if (bookService.AddBook(book))
                 {
                     ViewBag.Message = "Book details added successfully";
                 }
@@ -70,7 +77,7 @@ namespace SitecoreLibrary.Controllers
         // GET: BookWithAuthor/EditBook/5
         public ActionResult EditBook(int id)
         {
-            return View(_bookService.GetAllBooks().Find(book => book.Id == id));
+            return View(bookService.GetAllBooks().Find(book => book.Id == id));
 
         }
 
@@ -80,7 +87,7 @@ namespace SitecoreLibrary.Controllers
         {
             try
             {
-                _bookService.UpdateBook(obj);
+                bookService.UpdateBook(obj);
                 return RedirectToAction("GetAllBooks");
             }
             catch
@@ -94,7 +101,7 @@ namespace SitecoreLibrary.Controllers
         {
             try
             {
-                if (_bookService.DeleteBook(id))
+                if (bookService.DeleteBook(id))
                 {
                     ViewBag.AlertMsg = "Book details deleted successfully";
 
@@ -113,14 +120,14 @@ namespace SitecoreLibrary.Controllers
         {
             try
             {
-                if (!_bookService.TakeBook(bookId, userId))
+                if (!bookService.TakeBook(bookId, userId))
                 {
                     return RedirectToAction("GetAllBooks");
                 }
 
                 ViewBag.AlertMsg = "Book was taken";
                 
-                _postService.SendBookTakenEmail(eMail, bookName);
+                postService.SendBookTakenEmail(eMail, bookName);
 
                 return RedirectToAction("GetAllBooks");
 
@@ -137,14 +144,14 @@ namespace SitecoreLibrary.Controllers
         {
             try
             {
-                if (!_bookService.ReturnBook(bookId))
+                if (!bookService.ReturnBook(bookId))
                 {
                     return RedirectToAction("GetAllBooks");
                 }
 
                 ViewBag.AlertMsg = "Book was returned";
 
-                _postService.SendBookReturnedEmail(eMail);
+                postService.SendBookReturnedEmail(eMail);
 
                 return RedirectToAction("GetAllBooks");
 

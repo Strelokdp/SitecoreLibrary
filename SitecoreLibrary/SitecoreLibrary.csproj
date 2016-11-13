@@ -180,6 +180,9 @@
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BAL\Contracts\IBookService.cs" />
+    <Compile Include="BAL\Contracts\IBookHistoryService.cs" />
+    <Compile Include="BAL\Contracts\IPostService.cs" />
     <Compile Include="BAL\Services\BookHistoryService.cs" />
     <Compile Include="BAL\Services\BookService.cs" />
     <Compile Include="BAL\Services\PostService.cs" />
@@ -227,7 +230,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="BAL\Contracts\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

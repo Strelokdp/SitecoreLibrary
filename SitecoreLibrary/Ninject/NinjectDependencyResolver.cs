@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using SitecoreLibrary.BAL.Contracts;
+using SitecoreLibrary.BAL.Services;
 using SitecoreLibrary.DAL.Contracts;
 using SitecoreLibrary.DAL.Repository;
 
@@ -27,6 +29,7 @@ namespace SitecoreLibrary.Ninject
         {
             kernel.Bind<IBookRepository>().To<BookRepository>();
             kernel.Bind<IBookHistoryRepository>().To<BookHistoryRepository>();
+
         }
     }
 }
